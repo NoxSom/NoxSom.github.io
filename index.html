@@ -12,18 +12,34 @@
             font-family: "Microsoft Yahei", sans-serif;
         }
 
-        /* 粉紫极繁渐变背景 */
         body {
+            opacity: 0;
+            animation: fadeIn 1.2s ease forwards;
             background: linear-gradient(135deg, #ffcfe8 0%, #e0c8ff 50%, #f8d8f0 100%);
             min-height: 100vh;
             background-attachment: fixed;
             background-image: 
                 radial-gradient(circle at 10% 20%, rgba(255,255,255,0.3) 0%, transparent 30%),
                 radial-gradient(circle at 90% 80%, rgba(230,210,255,0.4) 0%, transparent 40%),
-                linear-gradient(135deg, #ffcfe8 0%, #e0c8ff 50%, #f8d8f0 100%);
+                radial-gradient(circle at 50% 50%, rgba(245,220,250,0.35) 0%, transparent 50%),
+                linear-gradient(135deg, #ffcfe8 0%, #e0c8ff 100%);
+            overflow-x: hidden;
         }
 
-        /* 导航栏 悬浮吸附 */
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        #starCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
         nav {
             width: 100%;
             padding: 25px 0;
@@ -42,24 +58,26 @@
             margin: 0 18px;
             font-size: 17px;
             font-weight: 500;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
         }
 
         nav a:hover {
             color: #b878c9;
             text-shadow: 0 0 8px rgba(210,160,240,0.6);
+            letter-spacing: 2px;
         }
 
-        /* 主体极繁装饰容器 */
         .container {
+            position: relative;
+            z-index: 2;
             width: 90%;
             max-width: 900px;
             margin: 80px auto 0;
             text-align: center;
-            padding: 60px 40px;
+            padding: 80px 40px;
             background: rgba(255,255,255,0.2);
-            backdrop-filter: blur(10px);
-            border-radius: 24px;
+            backdrop-filter: blur(12px);
+            border-radius: 28px;
             border: 1px solid rgba(255,255,255,0.5);
             box-shadow: 
                 0 8px 32px rgba(190,150,230,0.25),
@@ -67,22 +85,144 @@
         }
 
         h1 {
-            font-size: 48px;
+            font-size: 52px;
             color: #6b3b80;
-            letter-spacing: 6px;
-            text-shadow: 0 2px 10px rgba(180,130,220,0.4);
-            margin-bottom: 15px;
+            letter-spacing: 8px;
+            text-shadow: 0 2px 12px rgba(180,130,220,0.4);
+            margin-bottom: 20px;
+        }
+
+        .sub-title {
+            font-size: 18px;
+            color: #9c6aae;
+            letter-spacing: 3px;
+            margin-bottom: 30px;
+        }
+
+        .line-dec {
+            width: 60%;
+            height: 1px;
+            margin: 40px auto;
+            background: linear-gradient(to right, transparent, #c9a8e0, transparent);
         }
 
         .tip-text {
             font-size: 20px;
             color: #8c5b9e;
+            line-height: 2.2;
+        }
+
+        .member-entry {
+            margin-top: 50px;
+        }
+        .member-entry h3 {
+            font-size: 22px;
+            color: #7a4b8e;
+            margin-bottom: 25px;
+            letter-spacing: 2px;
+        }
+        .member-box {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+        .member-card {
+            width: 130px;
+            background: rgba(255,255,255,0.25);
+            backdrop-filter: blur(6px);
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.4);
+            padding: 15px 10px;
+            transition: 0.3s ease;
+            cursor: pointer;
+        }
+        .member-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 8px 20px rgba(180,140,220,0.3);
+            background: rgba(255,255,255,0.35);
+        }
+        .member-avatar {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid rgba(255,255,255,0.5);
+            margin-bottom: 10px;
+        }
+        .member-name {
+            color: #7a4b8e;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        /* 弹窗样式 */
+        .modal-mask {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(100,70,130,0.4);
+            backdrop-filter: blur(4px);
+            z-index: 9999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .modal-box {
+            width: 90%;
+            max-width: 500px;
+            background: rgba(255,255,255,0.3);
+            backdrop-filter: blur(16px);
+            border-radius: 24px;
+            border: 1px solid rgba(255,255,255,0.5);
+            padding: 30px;
+            color: #6b3b80;
             line-height: 2;
+            position: relative;
+        }
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #8c5b9e;
+        }
+
+        .footer-desc {
+            margin-top: 60px;
+            font-size: 14px;
+            color: #a880b9;
+            letter-spacing: 1px;
+        }
+
+        @media (max-width: 768px) {
+            nav a {
+                margin: 0 10px;
+                font-size: 15px;
+            }
+            h1 {
+                font-size: 38px;
+            }
+            .container {
+                padding: 50px 20px;
+            }
+            .member-card {
+                width: 110px;
+            }
+            .member-avatar {
+                width: 75px;
+                height: 75px;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- 原有导航 -->
+    <canvas id="starCanvas"></canvas>
+
     <nav>
         <a href="index.html">首页</a>
         <a href="notice.html">公告</a>
@@ -90,18 +230,162 @@
         <a href="work.html">作品</a>
     </nav>
 
-    <!-- 主体内容 -->
     <div class="container">
         <h1>NoxSom</h1>
+        <div class="sub-title">NOX · SOMNUS | 夜幕与眠梦交织</div>
+
+        <div class="line-dec"></div>
+
         <div class="tip-text">
+            时空闭环 · 多重梦境嵌套<br>
             官网正在精心搭建中<br>
+            敬请等候梦境降临
+        </div>
+
+        <div class="member-entry">
+            <h3>成员梦境入口</h3>
+            <div class="member-box">
+                <div class="member-card" data-id="1">
+                    <img class="member-avatar" src="https://github.com/NoxSom/NoxSom.github.io/blob/c37f65f6323a26370557aa5a824e86ea3e6f080d/retouch_2026051218355885.jpg?raw=true">
+                    <div class="member-name">白星晚 Elara</div>
+                </div>
+                <div class="member-card" data-id="2">
+                    <img class="member-avatar" src="https://github.com/NoxSom/NoxSom.github.io/blob/c37f65f6323a26370557aa5a824e86ea3e6f080d/IMG_20260512_170356.jpg?raw=true">
+                    <div class="member-name">河恩舒 Iris</div>
+                </div>
+                <div class="member-card" data-id="3">
+                    <img class="member-avatar" src="https://github.com/NoxSom/NoxSom.github.io/blob/c37f65f6323a26370557aa5a824e86ea3e6f080d/mmexport1778578111420.jpg?raw=true">
+                    <div class="member-name">金素兰 Luna</div>
+                </div>
+                <div class="member-card" data-id="4">
+                    <img class="member-avatar" src="https://github.com/NoxSom/NoxSom.github.io/blob/c37f65f6323a26370557aa5a824e86ea3e6f080d/retouch_2026051219031188.jpg?raw=true">
+                    <div class="member-name">彩夏允 Zoe</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-desc">
+            Official Fan Site · NoxSom © Dream Loop
         </div>
     </div>
 
-<!-- 防右键、防复制、防查看源码 -->
+    <!-- 成员简介弹窗 -->
+    <div class="modal-mask" id="modalMask">
+        <div class="modal-box">
+            <span class="modal-close" id="modalClose">×</span>
+            <div id="modalContent"></div>
+        </div>
+    </div>
+
 <script>
 document.oncontextmenu = function(){return false;}
 document.onselectstart = function(){return false;}
+
+// 星光粒子
+const canvas = document.getElementById('starCanvas');
+const ctx = canvas.getContext('2d');
+let stars = [];
+
+function resizeCanvas(){
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener('resize',resizeCanvas);
+
+class Star{
+    constructor(){
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.radius = Math.random() * 2 + 0.5;
+        this.speedX = Math.random() * 0.5 - 0.25;
+        this.speedY = Math.random() * 0.5 - 0.25;
+        this.alpha = Math.random() * 0.8 + 0.2;
+    }
+    draw(){
+        ctx.beginPath();
+        ctx.arc(this.x,this.y,this.radius,0,Math.PI*2);
+        ctx.fillStyle = `rgba(255,255,255,${this.alpha})`;
+        ctx.fill();
+    }
+    update(){
+        this.x += this.speedX;
+        this.y += this.speedY;
+        if(this.x < 0) this.x = canvas.width;
+        if(this.x > canvas.width) this.x = 0;
+        if(this.y < 0) this.y = canvas.height;
+        if(this.y > canvas.height) this.y = 0;
+        this.draw();
+    }
+}
+
+for(let i=0;i<120;i++){
+    stars.push(new Star());
+}
+
+function animate(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    stars.forEach(star=>star.update());
+    requestAnimationFrame(animate);
+}
+animate();
+
+// 成员资料
+const memberInfo = {
+    1: `
+<strong>白星晚 Elara</strong><br>
+韩文名：백성만 (Baek Seong Man)<br>
+英文名：Elara<br>
+中文名：白星晚<br>
+国籍：中国<br>
+定位：队长 / 主唱 / 门面
+    `,
+    2: `
+<strong>河恩舒 Iris</strong><br>
+韩文名：하은서 (Ha Eun Seo)<br>
+英文名：Iris<br>
+中文名：河恩舒<br>
+国籍：韩国🇰🇷 / 美国🇺🇸<br>
+定位：主唱 / 领舞
+    `,
+    3: `
+<strong>金素兰 Luna</strong><br>
+韩文名：김소란 (Kim So Ran)<br>
+英文名：Luna<br>
+中文名：金素兰<br>
+国籍：韩国🇰🇷<br>
+定位：Rap / 领唱
+    `,
+    4: `
+<strong>彩夏允 Zoe</strong><br>
+韩文名：채하윤 (Chae Ha Yoon)<br>
+英文名：Zoe<br>
+中文名：彩夏允<br>
+国籍：韩国🇰🇷 / 日本🇯🇵<br>
+定位：主舞 / 忙内
+    `
+};
+
+// 弹窗逻辑
+const modalMask = document.getElementById('modalMask');
+const modalContent = document.getElementById('modalContent');
+const modalClose = document.getElementById('modalClose');
+const cards = document.querySelectorAll('.member-card');
+
+cards.forEach(card=>{
+    card.addEventListener('click',function(){
+        let id = this.getAttribute('data-id');
+        modalContent.innerHTML = memberInfo[id];
+        modalMask.style.display = 'flex';
+    });
+});
+
+modalClose.addEventListener('click',()=>{
+    modalMask.style.display = 'none';
+});
+modalMask.addEventListener('click',e=>{
+    if(e.target === modalMask) modalMask.style.display = 'none';
+});
 </script>
 </body>
 </html>
