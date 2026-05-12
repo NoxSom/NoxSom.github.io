@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NoxSom | 官方网站</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft Yahei", sans-serif;
+        }
+
+        /* 粉紫极繁渐变背景 */
+        body {
+            background: linear-gradient(135deg, #ffcfe8 0%, #e0c8ff 50%, #f8d8f0 100%);
+            min-height: 100vh;
+            background-attachment: fixed;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(255,255,255,0.3) 0%, transparent 30%),
+                radial-gradient(circle at 90% 80%, rgba(230,210,255,0.4) 0%, transparent 40%),
+                linear-gradient(135deg, #ffcfe8 0%, #e0c8ff 50%, #f8d8f0 100%);
+        }
+
+        /* 导航栏 悬浮吸附 */
+        nav {
+            width: 100%;
+            padding: 25px 0;
+            text-align: center;
+            background: rgba(255,255,255,0.25);
+            backdrop-filter: blur(8px);
+            box-shadow: 0 2px 15px rgba(180,140,220,0.2);
+            position: sticky;
+            top: 0;
+            z-index: 999;
+        }
+
+        nav a {
+            color: #7a4b8e;
+            text-decoration: none;
+            margin: 0 18px;
+            font-size: 17px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        nav a:hover {
+            color: #b878c9;
+            text-shadow: 0 0 8px rgba(210,160,240,0.6);
+        }
+
+        /* 主体极繁装饰容器 */
+        .container {
+            width: 90%;
+            max-width: 900px;
+            margin: 80px auto 0;
+            text-align: center;
+            padding: 60px 40px;
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            border: 1px solid rgba(255,255,255,0.5);
+            box-shadow: 
+                0 8px 32px rgba(190,150,230,0.25),
+                inset 0 0 20px rgba(255,255,255,0.3);
+        }
+
+        h1 {
+            font-size: 48px;
+            color: #6b3b80;
+            letter-spacing: 6px;
+            text-shadow: 0 2px 10px rgba(180,130,220,0.4);
+            margin-bottom: 15px;
+        }
+
+        .tip-text {
+            font-size: 20px;
+            color: #8c5b9e;
+            line-height: 2;
+        }
+    </style>
+</head>
+<body>
+    <!-- 原有导航 -->
+    <nav>
+        <a href="index.html">首页</a>
+        <a href="notice.html">公告</a>
+        <a href="member.html">艺人动态</a>
+        <a href="work.html">作品</a>
+    </nav>
+
+    <!-- 主体内容 -->
+    <div class="container">
+        <h1>NoxSom</h1>
+        <div class="tip-text">
+            官网正在精心搭建中<br>
+        </div>
+    </div>
+
+<!-- 防右键、防复制、防查看源码 -->
+<script>
+document.oncontextmenu = function(){return false;}
+document.onselectstart = function(){return false;}
+</script>
+</body>
+</html>
