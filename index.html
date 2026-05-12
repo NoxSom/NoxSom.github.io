@@ -40,6 +40,7 @@
             pointer-events: none;
         }
 
+        /* 导航栏：默认顶部静态，不sticky，滚动隐藏显示动画 */
         nav {
             width: 100%;
             padding: 25px 0;
@@ -47,9 +48,15 @@
             background: rgba(255,255,255,0.25);
             backdrop-filter: blur(8px);
             box-shadow: 0 2px 15px rgba(180,140,220,0.2);
-            position: sticky;
+            position: fixed;
             top: 0;
+            left: 0;
             z-index: 999;
+            transition: transform 0.4s ease;
+        }
+        /* 向下滚动导航上移隐藏 */
+        nav.nav-hide {
+            transform: translateY(-100%);
         }
 
         nav a {
@@ -80,7 +87,7 @@
             border-radius: 28px;
             border: 1px solid rgba(255,255,255,0.5);
             box-shadow: 
-                0 8px 32px rgba(190,150,230,0.25),
+                0 8px 32px rgba190,150,230,0.25),
                 inset 0 0 20px rgba(255,255,255,0.3);
         }
 
@@ -223,7 +230,7 @@
 <body>
     <canvas id="starCanvas"></canvas>
 
-    <nav>
+    <nav id="mainNav">
         <a href="index.html">首页</a>
         <a href="notice.html">公告</a>
         <a href="member.html">艺人动态</a>
@@ -280,6 +287,20 @@
 <script>
 document.oncontextmenu = function(){return false;}
 document.onselectstart = function(){return false;}
+
+// 导航滚动显示隐藏逻辑
+const mainNav = document.getElementById('mainNav');
+let lastScrollY = 0;
+window.addEventListener('scroll', () => {
+    let currentScrollY = window.scrollY;
+    // 往下滚隐藏，往上滚显示
+    if (currentScrollY > lastScrollY && currentScrollY > 50) {
+        mainNav.classList.add('nav-hide');
+    } else {
+        mainNav.classList.remove('nav-hide');
+    }
+    lastScrollY = currentScrollY;
+});
 
 // 星光粒子
 const canvas = document.getElementById('starCanvas');
