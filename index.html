@@ -40,7 +40,6 @@
             pointer-events: none;
         }
 
-        /* 导航栏：默认顶部静态，不sticky，滚动隐藏显示动画 */
         nav {
             width: 100%;
             padding: 25px 0;
@@ -54,7 +53,6 @@
             z-index: 999;
             transition: transform 0.4s ease;
         }
-        /* 向下滚动导航上移隐藏 */
         nav.nav-hide {
             transform: translateY(-100%);
         }
@@ -87,7 +85,7 @@
             border-radius: 28px;
             border: 1px solid rgba(255,255,255,0.5);
             box-shadow: 
-                0 8px 32px rgba190,150,230,0.25),
+                0 8px 32px rgba(190,150,230,0.25),
                 inset 0 0 20px rgba(255,255,255,0.3);
         }
 
@@ -163,7 +161,6 @@
             font-weight: 500;
         }
 
-        /* 弹窗样式 */
         .modal-mask {
             position: fixed;
             top: 0;
@@ -253,19 +250,19 @@
             <h3>成员梦境入口</h3>
             <div class="member-box">
                 <div class="member-card" data-id="1">
-                    <img class="member-avatar" src="https://github.com/NoxSom/NoxSom.github.io/blob/c37f65f6323a26370557aa5a824e86ea3e6f080d/retouch_2026051218355885.jpg?raw=true">
+                    <img class="member-avatar" src="https://raw.githubusercontent.com/NoxSom/NoxSom.github.io/c37f65f6323a26370557aa5a824e86ea3e6f080d/retouch_2026051218355885.jpg">
                     <div class="member-name">白星晚 Elara</div>
                 </div>
                 <div class="member-card" data-id="2">
-                    <img class="member-avatar" src="https://github.com/NoxSom/NoxSom.github.io/blob/c37f65f6323a26370557aa5a824e86ea3e6f080d/IMG_20260512_170356.jpg?raw=true">
+                    <img class="member-avatar" src="https://raw.githubusercontent.com/NoxSom/NoxSom.github.io/c37f65f6323a26370557aa5a824e86ea3e6f080d/IMG_20260512_170356.jpg">
                     <div class="member-name">河恩舒 Iris</div>
                 </div>
                 <div class="member-card" data-id="3">
-                    <img class="member-avatar" src="https://github.com/NoxSom/NoxSom.github.io/blob/c37f65f6323a26370557aa5a824e86ea3e6f080d/mmexport1778578111420.jpg?raw=true">
+                    <img class="member-avatar" src="https://raw.githubusercontent.com/NoxSom/NoxSom.github.io/c37f65f6323a26370557aa5a824e86ea3e6f080d/mmexport1778578111420.jpg">
                     <div class="member-name">金素兰 Luna</div>
                 </div>
                 <div class="member-card" data-id="4">
-                    <img class="member-avatar" src="https://github.com/NoxSom/NoxSom.github.io/blob/c37f65f6323a26370557aa5a824e86ea3e6f080d/retouch_2026051219031188.jpg?raw=true">
+                    <img class="member-avatar" src="https://raw.githubusercontent.com/NoxSom/NoxSom.github.io/c37f65f6323a26370557aa5a824e86ea3e6f080d/retouch_2026051219031188.jpg">
                     <div class="member-name">彩夏允 Zoe</div>
                 </div>
             </div>
@@ -276,7 +273,6 @@
         </div>
     </div>
 
-    <!-- 成员简介弹窗 -->
     <div class="modal-mask" id="modalMask">
         <div class="modal-box">
             <span class="modal-close" id="modalClose">×</span>
@@ -288,12 +284,10 @@
 document.oncontextmenu = function(){return false;}
 document.onselectstart = function(){return false;}
 
-// 导航滚动显示隐藏逻辑
 const mainNav = document.getElementById('mainNav');
 let lastScrollY = 0;
 window.addEventListener('scroll', () => {
     let currentScrollY = window.scrollY;
-    // 往下滚隐藏，往上滚显示
     if (currentScrollY > lastScrollY && currentScrollY > 50) {
         mainNav.classList.add('nav-hide');
     } else {
@@ -302,7 +296,6 @@ window.addEventListener('scroll', () => {
     lastScrollY = currentScrollY;
 });
 
-// 星光粒子
 const canvas = document.getElementById('starCanvas');
 const ctx = canvas.getContext('2d');
 let stars = [];
@@ -351,7 +344,6 @@ function animate(){
 }
 animate();
 
-// 成员资料
 const memberInfo = {
     1: `
 <strong>白星晚 Elara</strong><br>
@@ -387,7 +379,6 @@ const memberInfo = {
     `
 };
 
-// 弹窗逻辑
 const modalMask = document.getElementById('modalMask');
 const modalContent = document.getElementById('modalContent');
 const modalClose = document.getElementById('modalClose');
