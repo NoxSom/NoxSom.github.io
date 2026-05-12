@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>NoxSom | 艺人聊天室</title>
     <style>
         * {
@@ -30,212 +30,289 @@
             to { opacity: 1; }
         }
 
+        /* 导航栏优化 */
         nav {
             width: 100%;
-            padding: 20px 0;
+            padding: 18px 0;
             text-align: center;
-            background: rgba(255,255,255,0.25);
-            backdrop-filter: blur(8px);
-            box-shadow: 0 2px 15px rgba(180,140,220,0.2);
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(180,140,220,0.15);
             position: sticky;
             top: 0;
             z-index: 999;
         }
 
         nav a {
-            color: #7a4b8e;
+            color: #704085;
             text-decoration: none;
-            margin: 0 18px;
-            font-size: 17px;
+            margin: 0 15px;
+            font-size: 16px;
             font-weight: 500;
             transition: all 0.3s ease;
         }
 
         nav a:hover {
             color: #b878c9;
-            text-shadow: 0 0 8px rgba(210,160,240,0.6);
-            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(210,160,240,0.7);
+            letter-spacing: 1.5px;
         }
 
-        /* 泡泡布局：侧边 + 聊天区 */
-        .bubble-wrap {
-            display: flex;
-            width: 94%;
-            max-width: 1100px;
-            margin: 30px auto;
-            border-radius: 24px;
+        /* 整体聊天容器 原创圆角磨砂 */
+        .chat-container {
+            width: 92%;
+            max-width: 1200px;
+            margin: 25px auto;
+            border-radius: 30px;
             overflow: hidden;
-            background: rgba(255,255,255,0.2);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255,255,255,0.5);
-            box-shadow: 0 8px 32px rgba(190,150,230,0.25);
+            background: rgba(255,255,255,0.18);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255,255,255,0.45);
+            box-shadow: 0 10px 40px rgba(170,130,210,0.2);
+            display: flex;
         }
 
-        /* 侧边艺人列表 */
-        .side-bar {
-            width: 260px;
-            background: rgba(255,255,255,0.15);
-            backdrop-filter: blur(8px);
-            padding: 20px 0;
-            border-right: 1px solid rgba(255,255,255,0.3);
+        /* 侧边艺人列表 全新设计 */
+        .artist-sidebar {
+            width: 280px;
+            background: rgba(255,255,255,0.12);
+            backdrop-filter: blur(10px);
+            padding: 25px 0;
+            border-right: 1px solid rgba(255,255,255,0.25);
         }
 
-        .side-title {
+        .sidebar-title {
             text-align: center;
-            font-size: 18px;
-            color: #7a4b8e;
-            margin-bottom: 20px;
-            letter-spacing: 2px;
+            font-size: 19px;
+            color: #704085;
+            margin-bottom: 25px;
+            letter-spacing: 3px;
+            font-weight: 600;
         }
 
         .artist-item {
             display: flex;
             align-items: center;
-            padding: 12px 20px;
+            padding: 15px 25px;
+            margin: 8px 12px;
+            border-radius: 20px;
             cursor: pointer;
-            transition: 0.3s;
-            color: #7a4b8e;
+            transition: all 0.35s ease;
+            color: #704085;
         }
 
-        .artist-item:hover, .artist-item.active {
-            background: rgba(255,255,255,0.25);
+        .artist-item:hover,
+        .artist-item.active {
+            background: rgba(255,255,255,0.28);
+            box-shadow: 0 4px 15px rgba(180,140,220,0.2);
+            transform: translateX(3px);
         }
 
         .artist-avatar {
-            width: 50px;
-            height: 50px;
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 15px;
+            border: 2px solid rgba(255,255,255,0.55);
+        }
+
+        .artist-name {
+            font-size: 16px;
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+
+        /* 聊天主区域 */
+        .chat-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            height: 720px;
+        }
+
+        .chat-top-bar {
+            padding: 18px 25px;
+            background: rgba(255,255,255,0.12);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255,255,255,0.25);
+            font-size: 19px;
+            color: #704085;
+            letter-spacing: 2px;
+            font-weight: 500;
+        }
+
+        .chat-content-wrap {
+            flex: 1;
+            padding: 25px;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #c9a8e0 transparent;
+        }
+
+        .chat-content-wrap::-webkit-scrollbar {
+            width: 6px;
+        }
+        .chat-content-wrap::-webkit-scrollbar-thumb {
+            background: #c9a8e0;
+            border-radius: 10px;
+        }
+
+        /* 聊天气泡 全新圆角高级设计 */
+        .msg-row {
+            margin-bottom: 22px;
+            display: flex;
+            align-items: flex-end;
+        }
+
+        .msg-role-artist {
+            justify-content: flex-start;
+        }
+        .msg-role-user {
+            justify-content: flex-end;
+        }
+
+        .msg-avatar {
+            width: 38px;
+            height: 38px;
             border-radius: 50%;
             object-fit: cover;
             margin-right: 12px;
             border: 2px solid rgba(255,255,255,0.5);
         }
 
-        .artist-name {
-            font-size: 16px;
-            font-weight: 500;
-        }
-
-        /* 主聊天区 */
-        .chat-area {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            height: 680px;
-        }
-
-        .chat-header {
-            padding: 15px 20px;
-            background: rgba(255,255,255,0.15);
-            backdrop-filter: blur(8px);
-            border-bottom: 1px solid rgba(255,255,255,0.3);
-            font-size: 18px;
-            color: #7a4b8e;
-            letter-spacing: 2px;
-        }
-
-        .chat-content {
-            flex: 1;
-            padding: 20px;
-            overflow-y: auto;
-        }
-
-        /* 聊天气泡 */
-        .msg {
-            margin-bottom: 18px;
-            display: flex;
-            align-items: flex-end;
-        }
-
-        .msg.artist {
-            justify-content: flex-start;
-        }
-
-        .msg.user {
-            justify-content: flex-end;
-        }
-
         .msg-bubble {
-            max-width: 70%;
-            padding: 12px 16px;
-            border-radius: 18px;
+            max-width: 72%;
+            padding: 14px 18px;
+            border-radius: 22px;
             font-size: 15px;
-            line-height: 1.6;
+            line-height: 1.7;
             color: #fff;
             word-wrap: break-word;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
         }
 
-        .msg.artist .msg-bubble {
-            background: rgba(180,140,220,0.7);
-            border-bottom-left-radius: 4px;
+        .msg-role-artist .msg-bubble {
+            background: linear-gradient(135deg, #b898e0, #a078d0);
+            border-bottom-left-radius: 6px;
         }
 
-        .msg.user .msg-bubble {
-            background: rgba(230,180,210,0.7);
-            border-bottom-right-radius: 4px;
+        .msg-role-user .msg-bubble {
+            background: linear-gradient(135deg, #f0b8d8, #e8a0c8);
+            border-bottom-right-radius: 6px;
         }
 
-        .msg-avatar {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin: 0 8px;
-        }
-
-        /* 输入框 */
-        .input-area {
+        /* 输入栏全新设计 */
+        .chat-input-bar {
             display: flex;
-            padding: 15px 20px;
-            background: rgba(255,255,255,0.15);
-            backdrop-filter: blur(8px);
-            border-top: 1px solid rgba(255,255,255,0.3);
+            align-items: center;
+            padding: 20px 25px;
+            background: rgba(255,255,255,0.12);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(255,255,255,0.25);
+            gap: 15px;
         }
 
-        #msg-input {
+        #chat-input {
             flex: 1;
-            padding: 12px 16px;
-            border-radius: 24px;
+            padding: 14px 22px;
+            border-radius: 30px;
             border: none;
             outline: none;
-            background: rgba(255,255,255,0.3);
-            backdrop-filter: blur(6px);
-            color: #7a4b8e;
+            background: rgba(255,255,255,0.35);
+            backdrop-filter: blur(8px);
+            color: #704085;
             font-size: 15px;
+            box-shadow: inset 0 2px 8px rgba(180,140,220,0.15);
         }
 
-        #send-btn {
-            margin-left: 12px;
-            padding: 12px 20px;
-            border-radius: 24px;
+        #send-chat-btn {
+            padding: 14px 28px;
+            border-radius: 30px;
             border: none;
-            background: rgba(180,140,220,0.7);
+            background: linear-gradient(135deg, #b898e0, #a078d0);
             color: #fff;
             font-size: 15px;
+            font-weight: 500;
             cursor: pointer;
-            transition: 0.3s;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(180,140,220,0.25);
         }
 
-        #send-btn:hover {
-            background: rgba(180,140,220,0.9);
+        #send-chat-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(180,140,220,0.35);
         }
 
-        /* 移动端适配 */
+        /* 移动端全局完美适配 */
         @media (max-width: 768px) {
-            .bubble-wrap {
+            .chat-container {
                 flex-direction: column;
+                width: 95%;
+                margin: 15px auto;
+                border-radius: 24px;
             }
-            .side-bar {
+
+            .artist-sidebar {
                 width: 100%;
                 display: flex;
                 overflow-x: auto;
+                padding: 15px 10px;
                 border-right: none;
-                border-bottom: 1px solid rgba(255,255,255,0.3);
+                border-bottom: 1px solid rgba(255,255,255,0.25);
             }
+
+            .sidebar-title {
+                display: none;
+            }
+
             .artist-item {
                 flex-shrink: 0;
+                margin: 0 8px;
+                padding: 10px 15px;
             }
-            .chat-area {
-                height: 500px;
+
+            .artist-avatar {
+                width: 44px;
+                height: 44px;
+                margin-right: 10px;
+            }
+
+            .artist-name {
+                font-size: 14px;
+            }
+
+            .chat-main {
+                height: calc(100vh - 260px);
+            }
+
+            .chat-top-bar {
+                padding: 15px 20px;
+                font-size: 17px;
+            }
+
+            .chat-content-wrap {
+                padding: 18px 15px;
+            }
+
+            .msg-bubble {
+                max-width: 80%;
+                padding: 12px 16px;
+                font-size: 14px;
+            }
+
+            .chat-input-bar {
+                padding: 15px 18px;
+            }
+
+            #chat-input {
+                padding: 12px 18px;
+                font-size: 14px;
+            }
+
+            #send-chat-btn {
+                padding: 12px 20px;
+                font-size: 14px;
             }
         }
     </style>
@@ -248,35 +325,35 @@
         <a href="work.html">作品</a>
     </nav>
 
-    <div class="bubble-wrap">
+    <div class="chat-container">
         <!-- 侧边艺人列表 -->
-        <div class="side-bar">
-            <div class="side-title">艺人聊天室</div>
+        <div class="artist-sidebar">
+            <div class="sidebar-title">艺人梦境聊天室</div>
             <div class="artist-item active" data-id="1">
-                <img class="artist-avatar" src="https://github.com/NoxSom/NoxSom.github.io/blob/c37f65f6323a26370557aa5a824e86ea3e6f080d/retouch_2026051218355885.jpg?raw=true">
+                <img class="artist-avatar" src="https://raw.githubusercontent.com/NoxSom/NoxSom.github.io/c37f65f6323a26370557aa5a824e86ea3e6f080d/retouch_2026051218355885.jpg">
                 <span class="artist-name">白星晚 Elara</span>
             </div>
             <div class="artist-item" data-id="2">
-                <img class="artist-avatar" src="https://github.com/NoxSom/NoxSom.github.io/blob/c37f65f6323a26370557aa5a824e86ea3e6f080d/IMG_20260512_170356.jpg?raw=true">
+                <img class="artist-avatar" src="https://raw.githubusercontent.com/NoxSom/NoxSom.github.io/c37f65f6323a26370557aa5a824e86ea3e6f080d/IMG_20260512_170356.jpg">
                 <span class="artist-name">河恩舒 Iris</span>
             </div>
             <div class="artist-item" data-id="3">
-                <img class="artist-avatar" src="https://github.com/NoxSom/NoxSom.github.io/blob/c37f65f6323a26370557aa5a824e86ea3e6f080d/mmexport1778578111420.jpg?raw=true">
+                <img class="artist-avatar" src="https://raw.githubusercontent.com/NoxSom/NoxSom.github.io/c37f65f6323a26370557aa5a824e86ea3e6f080d/mmexport1778578111420.jpg">
                 <span class="artist-name">金素兰 Luna</span>
             </div>
             <div class="artist-item" data-id="4">
-                <img class="artist-avatar" src="https://github.com/NoxSom/NoxSom.github.io/blob/c37f65f6323a26370557aa5a824e86ea3e6f080d/retouch_2026051219031188.jpg?raw=true">
+                <img class="artist-avatar" src="https://raw.githubusercontent.com/NoxSom/NoxSom.github.io/c37f65f6323a26370557aa5a824e86ea3e6f080d/retouch_2026051219031188.jpg">
                 <span class="artist-name">彩夏允 Zoe</span>
             </div>
         </div>
 
-        <!-- 主聊天区 -->
-        <div class="chat-area">
-            <div class="chat-header" id="chat-header">白星晚 Elara · 聊天室</div>
-            <div class="chat-content" id="chat-content"></div>
-            <div class="input-area">
-                <input type="text" id="msg-input" placeholder="发送消息...">
-                <button id="send-btn">发送</button>
+        <!-- 聊天主区域 -->
+        <div class="chat-main">
+            <div class="chat-top-bar" id="chatTopBar">白星晚 Elara · 梦境聊天室</div>
+            <div class="chat-content-wrap" id="chatContent"></div>
+            <div class="chat-input-bar">
+                <input type="text" id="chat-input" placeholder="向艺人发送消息...">
+                <button id="send-chat-btn">发送</button>
             </div>
         </div>
     </div>
@@ -285,12 +362,11 @@
 document.oncontextmenu = function(){return false;}
 document.onselectstart = function(){return false;}
 
-// 艺人资料
+// 艺人资料 高速头像链接
 const artists = {
     1: {
         name: "白星晚 Elara",
-        avatar: "https://github.com/NoxSom/NoxSom.github.io/blob/c37f65f6323a26370557aa5a824e86ea3e6f080d/retouch_2026051218355885.jpg?raw=true",
-        // AI 人设回复库（自然、无AI感）
+        avatar: "https://raw.githubusercontent.com/NoxSom/NoxSom.github.io/c37f65f6323a26370557aa5a824e86ea3e6f080d/retouch_2026051218355885.jpg",
         replies: [
             "今天练习好累，但看到你的消息就很开心✨",
             "最近在准备新曲，希望你会喜欢～",
@@ -301,7 +377,7 @@ const artists = {
     },
     2: {
         name: "河恩舒 Iris",
-        avatar: "https://github.com/NoxSom/NoxSom.github.io/blob/c37f65f6323a26370557aa5a824e86ea3e6f080d/IMG_20260512_170356.jpg?raw=true",
+        avatar: "https://raw.githubusercontent.com/NoxSom/NoxSom.github.io/c37f65f6323a26370557aa5a824e86ea3e6f080d/IMG_20260512_170356.jpg",
         replies: [
             "Hi～今天过得怎么样？🌸",
             "韩语/英语都可以跟我聊哦～",
@@ -312,7 +388,7 @@ const artists = {
     },
     3: {
         name: "金素兰 Luna",
-        avatar: "https://github.com/NoxSom/NoxSom.github.io/blob/c37f65f6323a26370557aa5a824e86ea3e6f080d/mmexport1778578111420.jpg?raw=true",
+        avatar: "https://raw.githubusercontent.com/NoxSom/NoxSom.github.io/c37f65f6323a26370557aa5a824e86ea3e6f080d/mmexport1778578111420.jpg",
         replies: [
             "Yo～今天也很酷吧😎",
             "写了新的rap，下次唱给你听",
@@ -323,7 +399,7 @@ const artists = {
     },
     4: {
         name: "彩夏允 Zoe",
-        avatar: "https://github.com/NoxSom/NoxSom.github.io/blob/c37f65f6323a26370557aa5a824e86ea3e6f080d/retouch_2026051219031188.jpg?raw=true",
+        avatar: "https://raw.githubusercontent.com/NoxSom/NoxSom.github.io/c37f65f6323a26370557aa5a824e86ea3e6f080d/retouch_2026051219031188.jpg",
         replies: [
             "跳舞超开心！今天也活力满满💃",
             "欧尼们都很照顾我～",
@@ -335,10 +411,10 @@ const artists = {
 };
 
 let currentId = 1;
-const chatContent = document.getElementById("chat-content");
-const chatHeader = document.getElementById("chat-header");
-const msgInput = document.getElementById("msg-input");
-const sendBtn = document.getElementById("send-btn");
+const chatContent = document.getElementById("chatContent");
+const chatTopBar = document.getElementById("chatTopBar");
+const chatInput = document.getElementById("chat-input");
+const sendBtn = document.getElementById("send-chat-btn");
 const artistItems = document.querySelectorAll(".artist-item");
 
 // 切换艺人
@@ -347,53 +423,49 @@ artistItems.forEach(item => {
         artistItems.forEach(i => i.classList.remove("active"));
         item.classList.add("active");
         currentId = item.getAttribute("data-id");
-        chatHeader.innerText = `${artists[currentId].name} · 聊天室`;
-        // 清空聊天记录（可保留）
+        chatTopBar.innerText = `${artists[currentId].name} · 梦境聊天室`;
         chatContent.innerHTML = "";
-        // 自动发一条艺人开场
-        addMsg("artist", artists[currentId].replies[0], artists[currentId].avatar);
+        addChatMsg("artist", artists[currentId].replies[0], artists[currentId].avatar);
     });
 });
 
-// 发送消息
-function sendMsg() {
-    const text = msgInput.value.trim();
+// 发送消息逻辑
+function sendChat() {
+    const text = chatInput.value.trim();
     if (!text) return;
-    // 用户气泡
-    addMsg("user", text, "");
-    msgInput.value = "";
-    // AI 随机回复（无延迟或短延迟，像真人）
+    addChatMsg("user", text, "");
+    chatInput.value = "";
+    // 模拟真人延迟回复
     setTimeout(() => {
-        const r = artists[currentId].replies;
-        const reply = r[Math.floor(Math.random() * r.length)];
-        addMsg("artist", reply, artists[currentId].avatar);
-    }, 800 + Math.random() * 700); // 0.8-1.5秒，自然
+        const replyList = artists[currentId].replies;
+        const randomReply = replyList[Math.floor(Math.random() * replyList.length)];
+        addChatMsg("artist", randomReply, artists[currentId].avatar);
+    }, 800 + Math.random() * 600);
 }
 
-// 添加气泡
-function addMsg(role, text, avatar) {
-    const msg = document.createElement("div");
-    msg.className = `msg ${role}`;
+// 插入聊天气泡
+function addChatMsg(role, text, avatar) {
+    const msgWrap = document.createElement("div");
+    msgWrap.className = `msg-row msg-role-${role}`;
     if (role === "artist") {
-        msg.innerHTML = `
+        msgWrap.innerHTML = `
             <img class="msg-avatar" src="${avatar}">
             <div class="msg-bubble">${text}</div>
         `;
     } else {
-        msg.innerHTML = `<div class="msg-bubble">${text}</div>`;
+        msgWrap.innerHTML = `<div class="msg-bubble">${text}</div>`;
     }
-    chatContent.appendChild(msg);
-    // 自动滚动到底
+    chatContent.appendChild(msgWrap);
     chatContent.scrollTop = chatContent.scrollHeight;
 }
 
-sendBtn.addEventListener("click", sendMsg);
-msgInput.addEventListener("keydown", e => {
-    if (e.key === "Enter") sendMsg();
+sendBtn.addEventListener("click", sendChat);
+chatInput.addEventListener("keydown", e => {
+    if (e.key === "Enter") sendChat();
 });
 
-// 默认第一条消息
-addMsg("artist", artists[currentId].replies[0], artists[currentId].avatar);
+// 默认初始消息
+addChatMsg("artist", artists[currentId].replies[0], artists[currentId].avatar);
 </script>
 </body>
 </html>
