@@ -17,7 +17,8 @@
             background-attachment: fixed;
             padding-top: 80px;
         }
-        /* 导航栏 完全复刻首页同款 */
+
+        /* 导航栏 完全复刻你首页同款样式+下滑隐藏 */
         nav {
             width: 100%;
             padding: 25px 0;
@@ -34,6 +35,7 @@
         nav.nav-hide {
             transform: translateY(-100%);
         }
+
         nav a {
             color: #7a4b8e;
             text-decoration: none;
@@ -47,6 +49,7 @@
             text-shadow: 0 0 8px rgba(210,160,240,0.6);
             letter-spacing: 2px;
         }
+
         .container {
             width: 90%;
             max-width: 900px;
@@ -190,7 +193,7 @@
     </style>
 </head>
 <body>
-    <!-- 导航栏 修复链接+复刻首页样式 -->
+    <!-- 修复导航href + 样式同步首页 -->
     <nav id="mainNav">
         <a href=" ">首页</a >
         <a href="notice.html">公告</a >
@@ -230,7 +233,7 @@
                     <div class="song-name">Dream Magnet</div>
                     <div class="custom-audio">
                         <div class="player-top">
-                            <button class="play-btn" data-src="https://raw.githubusercontent.com/NoxSom/NoxSom.github.io/2c5e63f4617e0b17a76d267d47a3d93e15ed7441/Dream-Magnet.mp3">▶</button>
+                            <button class="play-btn" data-src="https://raw.githubusercontent.com/NoxSom/NoxSom.github.io/2c5e63f4617e0b17a76d267d47a3d93e15ed7441/Dream%20Magnet.mp3">▶</button>
                             <div class="progress-wrap">
                                 <div class="progress-bar">
                                     <div class="progress-fill"></div>
@@ -245,16 +248,16 @@
                                 <option value="1.25">1.25x</option>
                                 <option value="1.5">1.5x</option>
                             </select>
-                            <a class="down-btn" href="https://raw.githubusercontent.com/NoxSom/NoxSom.github.io/2c5e63f4617e0b17a76d267d47a3d93e15ed7441/Dream-Magnet.mp3" download>下载</a >
+                            <a class="down-btn" href="https://raw.githubusercontent.com/NoxSom/NoxSom.github.io/2c5e63f4617e0b17a76d267d47a3d93e15ed7441/Dream%20Magnet.mp3" download>下载</a >
                         </div>
                     </div>
                 </div>
-                <!-- 歌曲2 修复链接 秒加载 -->
+                <!-- 歌曲2 已换新链接 -->
                 <div class="song-item">
-                    <div class="song-name">Loop</div>
+                    <div class="song-name">Loop (꿈의 고리)</div>
                     <div class="custom-audio">
                         <div class="player-top">
-                            <button class="play-btn" data-src="https://raw.githubusercontent.com/NoxSom/NoxSom.github.io/2c5e63f4617e0b17a76d267d47a3d93e15ed7441/Loop.mp3">▶</button>
+                            <button class="play-btn" data-src="https://raw.githubusercontent.com/NoxSom/NoxSom.github.io/83ab4f5ec4337400242afdfd232c9cb1e972fe89/Loop%20.mp3">▶</button>
                             <div class="progress-wrap">
                                 <div class="progress-bar">
                                     <div class="progress-fill"></div>
@@ -269,16 +272,16 @@
                                 <option value="1.25">1.25x</option>
                                 <option value="1.5">1.5x</option>
                             </select>
-                            <a class="down-btn" href="https://raw.githubusercontent.com/NoxSom/NoxSom.github.io/2c5e63f4617e0b17a76d267d47a3d93e15ed7441/Loop.mp3" download>下载</a >
+                            <a class="down-btn" href="https://raw.githubusercontent.com/NoxSom/NoxSom.github.io/83ab4f5ec4337400242afdfd232c9cb1e972fe89/Loop%20.mp3" download>下载</a >
                         </div>
                     </div>
                 </div>
-                <!-- 歌曲3 修复链接 秒加载 -->
+                <!-- 歌曲3 已换新链接 -->
                 <div class="song-item">
-                    <div class="song-name">hypnosia-Rewrite</div>
+                    <div class="song-name">hypnosia(Rewrite Ver.)</div>
                     <div class="custom-audio">
                         <div class="player-top">
-                            <button class="play-btn" data-src="https://raw.githubusercontent.com/NoxSom/NoxSom.github.io/2c5e63f4617e0b17a76d267d47a3d93e15ed7441/hypnosia-Rewrite.mp3">▶</button>
+                            <button class="play-btn" data-src="https://raw.githubusercontent.com/NoxSom/NoxSom.github.io/83ab4f5ec4337400242afdfd232c9cb1e972fe89/hypnosia-Rewrite.mp3">▶</button>
                             <div class="progress-wrap">
                                 <div class="progress-bar">
                                     <div class="progress-fill"></div>
@@ -293,7 +296,7 @@
                                 <option value="1.25">1.25x</option>
                                 <option value="1.5">1.5x</option>
                             </select>
-                            <a class="down-btn" href="https://raw.githubusercontent.com/NoxSom/NoxSom.github.io/2c5e63f4617e0b17a76d267d47a3d93e15ed7441/hypnosia-Rewrite.mp3" download>下载</a >
+                            <a class="down-btn" href="https://raw.githubusercontent.com/NoxSom/NoxSom.github.io/83ab4f5ec4337400242afdfd232c9cb1e972fe89/hypnosia-Rewrite.mp3" download>下载</a >
                         </div>
                     </div>
                 </div>
@@ -302,19 +305,6 @@
     </div>
 
 <script>
-// 滚动隐藏导航 复刻首页逻辑
-const mainNav = document.getElementById('mainNav');
-let lastScrollY = 0;
-window.addEventListener('scroll', () => {
-    let currentScrollY = window.scrollY;
-    if (currentScrollY > lastScrollY && currentScrollY > 50) {
-        mainNav.classList.add('nav-hide');
-    } else {
-        mainNav.classList.remove('nav-hide');
-    }
-    lastScrollY = currentScrollY;
-});
-
 // 展开收起
 function toggleAlbum(el){
     let list = el.querySelector('.song-list');
@@ -328,6 +318,19 @@ function formatTime(s){
     let sec = Math.floor(s % 60);
     return (m<10?'0'+m:m) + ':' + (sec<10?'0'+sec:sec);
 }
+
+// 导航栏下滑隐藏 同步首页逻辑
+const mainNav = document.getElementById('mainNav');
+let lastScrollY = 0;
+window.addEventListener('scroll', () => {
+    let currentScrollY = window.scrollY;
+    if (currentScrollY > lastScrollY && currentScrollY > 50) {
+        mainNav.classList.add('nav-hide');
+    } else {
+        mainNav.classList.remove('nav-hide');
+    }
+    lastScrollY = currentScrollY;
+});
 
 // 自定义播放器逻辑
 document.querySelectorAll('.play-btn').forEach(btn=>{
