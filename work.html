@@ -118,7 +118,7 @@
             position: relative;
             z-index: 2;
         }
-        /* 专辑卡片 */
+        /* 专辑卡片极致美化 */
         .album-card {
             width: 100%;
             background: rgba(255,255,255,0.38);
@@ -130,6 +130,7 @@
             position: relative;
             overflow: hidden;
         }
+        /* 仅头部区域可点击展开，播放器区域禁止冒泡 */
         .album-head {
             cursor: pointer;
         }
@@ -151,11 +152,6 @@
         .album-card:hover {
             transform: translateY(-6px) scale(1.01);
             box-shadow: 0 12px 35px rgba(180,140,220,0.35);
-        }
-        /* 收起时强制还原卡片悬浮状态，解决动画回弹错乱 */
-        .album-card.collapse-reset:hover{
-            transform: translateY(0) scale(1);
-            box-shadow: 0 6px 15px rgba(180,140,220,0.2);
         }
         .album-cover {
             width: 190px;
@@ -183,7 +179,7 @@
         .album-card:hover .arrow-tip {
             color: #b878c9;
         }
-        /* MV按钮 */
+        /* MV按钮升级 */
         .mv-btn {
             display:inline-block;
             padding:12px 28px;
@@ -207,23 +203,17 @@
             box-shadow: 0 8px 25px rgba(180,100,255,0.35);
             background:linear-gradient(135deg, rgba(230,122,255,0.4), rgba(180,100,255,0.4));
         }
-        /* 歌曲列表 顺滑显隐动画 */
+        /* 歌曲列表 */
         .song-list {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.5s ease, margin-top 0.4s ease, padding-top 0.4s ease;
-            margin-top: 0;
-            padding-top: 0;
-            border-top: 1px dashed rgba(180,140,220,0.45);
-        }
-        .song-list.show {
-            max-height: 2000px;
+            display: none;
             margin-top: 30px;
             padding-top: 30px;
+            border-top: 1px dashed rgba(180,140,220,0.45);
         }
         .song-item {
             margin: 30px 0;
             animation: songFade 0.5s ease forwards;
+            /* 阻止内部点击冒泡到卡片 */
             pointer-events: auto;
         }
         @keyframes songFade {
@@ -237,7 +227,7 @@
             font-weight: 500;
             letter-spacing: 0.5px;
         }
-        /* 播放器 */
+        /* 播放器区域禁止触发收起 */
         .custom-audio {
             width: 100%;
             background: linear-gradient(135deg, rgba(248,216,240,0.7), rgba(224,200,255,0.7));
@@ -251,9 +241,11 @@
             box-shadow: 0 4px 15px rgba(170,130,210,0.2);
             border: 1px solid rgba(255,255,255,0.35);
             position: relative;
+            /* 核心修复：阻止点击冒泡 */
             pointer-events: auto;
             z-index: 10;
         }
+        /* 播放器呼吸柔光 */
         .custom-audio::before{
             content:"";
             position:absolute;
@@ -324,6 +316,7 @@
             position: relative;
             z-index:2;
         }
+        /* 修复手机端倍速选择框点击失灵 */
         .speed-select {
             background:rgba(255,255,255,0.4);
             border:1px solid rgba(255,255,255,0.5);
@@ -364,7 +357,7 @@
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(184,148,232,0.35);
         }
-        /* 移动端适配 */
+        /* 移动端全局适配 */
         @media (max-width: 768px) {
             nav a {
                 margin: 0 12px;
@@ -403,6 +396,7 @@
     </style>
 </head>
 <body>
+    <!-- 导航完全和首页一致 -->
     <nav id="mainNav">
         <a href="index.html">首页</a>
         <a href="notice.html">公告</a>
@@ -412,7 +406,9 @@
 
     <div class="container">
         <h1>作品专区</h1>
+
         <div class="album-card">
+            <!-- 仅头部可点击展开 -->
             <div class="album-head" onclick="toggleAlbum(this.parentElement)">
                 <img class="album-cover" src="https://raw.githubusercontent.com/NoxSom/NoxSom.github.io/020d2633aab03f4088c084cabb051793d8f34d7b/%E4%B8%93%E8%BE%911/%E6%97%A0%E6%A0%87%E9%A2%9869.png">
                 <div class="album-name">Single Album</div>
@@ -421,6 +417,7 @@
             </div>
 
             <div class="song-list">
+                <!-- 歌曲1 -->
                 <div class="song-item">
                     <div class="song-name">Dream Magnet</div>
                     <div class="custom-audio">
@@ -444,6 +441,7 @@
                         </div>
                     </div>
                 </div>
+                <!-- 歌曲2 -->
                 <div class="song-item">
                     <div class="song-name">Loop (꿈의 고리)</div>
                     <div class="custom-audio">
@@ -467,11 +465,12 @@
                         </div>
                     </div>
                 </div>
+                <!-- 歌曲3 -->
                 <div class="song-item">
                     <div class="song-name">hypnosia(Rewrite Ver.)</div>
                     <div class="custom-audio">
                         <div class="player-top">
-                            <button class="play-btn" data-src="https://raw.githubusercontent.com/NoxSom/NoxSom/NoxSom.github.io/b67d49edafde59603bfa2cb03d3cfc1d0dbdfb51/%E4%B8%93%E8%BE%911/hypnosia.mp3">▶</button>
+                            <button class="play-btn" data-src="https://raw.githubusercontent.com/NoxSom/NoxSom.github.io/b67d49edafde59603bfa2cb03d3cfc1d0dbdfb51/%E4%B8%93%E8%BE%911/hypnosia.mp3">▶</button>
                             <div class="progress-wrap">
                                 <div class="progress-bar">
                                     <div class="progress-fill"></div>
@@ -486,7 +485,7 @@
                                 <option value="1.25">1.25x</option>
                                 <option value="1.5">1.5x</option>
                             </select>
-                            <a class="down-btn" href="https://raw.githubusercontent.com/NoxSom/NoxSom/NoxSom.github.io/b67d49edafde59603bfa2cb03d3cfc1d0dbdfb51/%E4%B8%93%E8%BE%911/hypnosia.mp3" download>下载</a>
+                            <a class="down-btn" href="https://raw.githubusercontent.com/NoxSom/NoxSom.github.io/b67d49edafde59603bfa2cb03d3cfc1d0dbdfb51/%E4%B8%93%E8%BE%911/hypnosia.mp3" download>下载</a>
                         </div>
                     </div>
                 </div>
@@ -495,7 +494,7 @@
     </div>
 
 <script>
-// 导航滚动隐藏
+// 导航滚动隐藏逻辑 同步首页
 const mainNav = document.getElementById('mainNav');
 let lastScrollY = 0;
 window.addEventListener('scroll', () => {
@@ -508,18 +507,10 @@ window.addEventListener('scroll', () => {
     lastScrollY = currentScrollY;
 });
 
-// 展开收起 + 修复卡片收回动画错乱
+// 展开收起
 function toggleAlbum(card){
     let list = card.querySelector('.song-list');
-    let isShow = list.classList.contains('show');
-    if(isShow){
-        list.classList.remove('show');
-        // 收起时临时禁用卡片悬浮放大，解决回弹动画错位
-        card.classList.add('collapse-reset');
-        setTimeout(()=>card.classList.remove('collapse-reset'),500);
-    }else{
-        list.classList.add('show');
-    }
+    list.style.display = list.style.display === 'block' ? 'none' : 'block';
 }
 
 // 格式化时间
@@ -530,7 +521,7 @@ function formatTime(s){
     return (m<10?'0'+m:m) + ':' + (sec<10?'0'+sec:sec);
 }
 
-// 播放器逻辑
+// 播放器独立实例 + 阻止冒泡 彻底修复所有BUG
 document.querySelectorAll('.custom-audio').forEach(playerBox => {
     let audio = new Audio();
     let btn = playerBox.querySelector('.play-btn');
@@ -540,18 +531,33 @@ document.querySelectorAll('.custom-audio').forEach(playerBox => {
     let speedSel = playerBox.querySelector('.speed-select');
     let playing = false;
 
+    // 阻止播放器内部所有点击向上冒泡（核心解决点倍速收起列表）
     playerBox.addEventListener('click',e=>e.stopPropagation());
 
+    // 倍速切换
     speedSel.addEventListener('change',function(){
         audio.playbackRate = parseFloat(this.value);
     });
 
+    // 播放暂停
     btn.addEventListener('click',function(e){
         e.stopPropagation();
         if(!playing){
             audio.src = this.dataset.src;
             audio.playbackRate = parseFloat(speedSel.value);
-            audio.play().catch(()=>{});
+            audio.play().catch(e=>{});
             this.innerText = '■';
             playing = true;
         }else{
+            audio.pause();
+            this.innerText = '▶';
+            playing = false;
+        }
+    });
+
+    // 进度更新
+    audio.ontimeupdate = function(){
+        if(audio.duration){
+            let per = (audio.currentTime / audio.duration) * 100;
+            fill.style.width = per + '%';
+            timeTxt.innerTex
