@@ -86,8 +86,6 @@
             margin-bottom: 12px;
             font-size:18px;
         }
-
-        /* 优化后的自定义播放器 */
         .custom-audio {
             width: 100%;
             background: linear-gradient(135deg, rgba(248,216,240,0.6), rgba(224,200,255,0.6));
@@ -138,7 +136,6 @@
             margin-top:6px;
             text-align:right;
         }
-        /* 倍速+下载控制栏 */
         .player-controls {
             display: flex;
             justify-content: flex-end;
@@ -168,17 +165,16 @@
 </head>
 <body>
     <nav>
-        <a href="index.html">首页</a>
-        <a href="notice.html">公告</a>
-        <a href="member.html">艺人动态</a>
-        <a href="work.html">作品</a>
+        <a href="">首页</a >
+        <a href=" ">公告</a >
+        <a href="member.html">艺人动态</a >
+        <a href="work.html">作品</a >
     </nav>
 
     <div class="container">
         <h1>作品专区</h1>
-
         <div class="album-card" onclick="toggleAlbum(this)">
-            <img class="album-cover" src="https://raw.githubusercontent.com/NoxSom/NoxSom.github.io/c37f65f6323a26370557aa5a824e86ea3e6f080d/mmexport1777382896031.jpeg">
+            < img class="album-cover" src="https://raw.githubusercontent.com/NoxSom/NoxSom.github.io/c37f65f6323a26370557aa5a824e86ea3e6f080d/mmexport1777382896031.jpeg">
             <div class="album-name">Single Album</div>
             <div style="margin-top:15px;text-align:center;">
               <a href="https://weixin.qq.com/sph/ARNqhihxBO"
@@ -196,10 +192,9 @@
                         letter-spacing:1px;
                         box-shadow: 0 4px 15px rgba(180,100,255,0.2);">
                  MV
-              </a>
+              </a >
             </div>
             <div class="arrow-tip">点击展开 / 收起 ▼</div>
-
             <div class="song-list">
                 <!-- 歌曲1 -->
                 <div class="song-item">
@@ -221,7 +216,7 @@
                                 <option value="1.25">1.25x</option>
                                 <option value="1.5">1.5x</option>
                             </select>
-                            <a class="down-btn" href="https://raw.githubusercontent.com/NoxSom/NoxSom.github.io/2c5e63f4617e0b17a76d267d47a3d93e15ed7441/Dream%20Magnet.mp3" download>下载</a>
+                            <a class="down-btn" href="https://raw.githubusercontent.com/NoxSom/NoxSom.github.io/2c5e63f4617e0b17a76d267d47a3d93e15ed7441/Dream%20Magnet.mp3" download>下载</a >
                         </div>
                     </div>
                 </div>
@@ -230,7 +225,7 @@
                     <div class="song-name">Loop (꿈의 고리)</div>
                     <div class="custom-audio">
                         <div class="player-top">
-                            <button class="play-btn" data-src="https://raw.githubusercontent.com/NoxSom/NoxSom.github.io/83ab4f5ec4337400242afdfd232c9cb1e972fe89/Loop%20.mp3">▶</button>
+                            <button class="play-btn" data-src="https://raw.githubusercontent.com/NoxSom/NoxSom.github.io/d7d738cd4d3733b32d5282da0c1da9ca52eb4d00/Loop%20.mp3">▶</button>
                             <div class="progress-wrap">
                                 <div class="progress-bar">
                                     <div class="progress-fill"></div>
@@ -245,7 +240,7 @@
                                 <option value="1.25">1.25x</option>
                                 <option value="1.5">1.5x</option>
                             </select>
-                            <a class="down-btn" href="https://raw.githubusercontent.com/NoxSom/NoxSom.github.io/83ab4f5ec4337400242afdfd232c9cb1e972fe89/Loop%20.mp3" download>下载</a>
+                            <a class="down-btn" href="https://raw.githubusercontent.com/NoxSom/NoxSom.github.io/d7d738cd4d3733b32d5282da0c1da9ca52eb4d00/Loop%20.mp3" download>下载</a >
                         </div>
                     </div>
                 </div>
@@ -254,7 +249,7 @@
                     <div class="song-name">hypnosia(Rewrite Ver.)</div>
                     <div class="custom-audio">
                         <div class="player-top">
-                            <button class="play-btn" data-src="https://raw.githubusercontent.com/NoxSom/NoxSom.github.io/83ab4f5ec4337400242afdfd232c9cb1e972fe89/hypnosia-Rewrite.mp3">▶</button>
+                            <button class="play-btn" data-src="https://raw.githubusercontent.com/NoxSom/NoxSom.github.io/38275fd34c7b311031e742c2ef5276c343065331/hypnosia.mp3">▶</button>
                             <div class="progress-wrap">
                                 <div class="progress-bar">
                                     <div class="progress-fill"></div>
@@ -269,7 +264,7 @@
                                 <option value="1.25">1.25x</option>
                                 <option value="1.5">1.5x</option>
                             </select>
-                            <a class="down-btn" href="https://raw.githubusercontent.com/NoxSom/NoxSom.github.io/83ab4f5ec4337400242afdfd232c9cb1e972fe89/hypnosia-Rewrite.mp3" download>下载</a>
+                            <a class="down-btn" href="https://raw.githubusercontent.com/NoxSom/NoxSom.github.io/38275fd34c7b311031e742c2ef5276c343065331/hypnosia.mp3" download>下载</a >
                         </div>
                     </div>
                 </div>
@@ -278,13 +273,11 @@
     </div>
 
 <script>
-// 展开收起
 function toggleAlbum(el){
     let list = el.querySelector('.song-list');
     list.style.display = list.style.display === 'block' ? 'none' : 'block';
 }
 
-// 格式化时间
 function formatTime(s){
     if(isNaN(s)) return "00:00 / 00:00";
     let m = Math.floor(s / 60);
@@ -292,58 +285,67 @@ function formatTime(s){
     return (m<10?'0'+m:m) + ':' + (sec<10?'0'+sec:sec);
 }
 
-// 自定义播放器逻辑
+let currentAudio = null;
+let currentBtn = null;
+
 document.querySelectorAll('.play-btn').forEach(btn=>{
-    let audio = new Audio();
     let wrap = btn.closest('.custom-audio');
     let bar = wrap.querySelector('.progress-bar');
     let fill = wrap.querySelector('.progress-fill');
     let timeTxt = wrap.querySelector('.time-text');
     let speedSel = wrap.querySelector('.speed-select');
-    let playing = false;
 
-    // 倍速切换
     speedSel.onchange = function(){
-        audio.playbackRate = parseFloat(this.value);
+        if(currentAudio) currentAudio.playbackRate = parseFloat(this.value);
     };
 
     btn.onclick = function(e){
         e.stopPropagation();
-        if(!playing){
-            audio.src = this.dataset.src;
-            audio.playbackRate = parseFloat(speedSel.value);
-            audio.play();
-            this.innerText = '■';
-            playing = true;
-        }else{
-            audio.pause();
-            this.innerText = '▶';
-            playing = false;
+        const src = this.dataset.src;
+
+        if(currentAudio){
+            currentAudio.pause();
+            currentAudio.currentTime = 0;
+            if(currentBtn) currentBtn.innerText = '▶';
         }
-    };
 
-    // 进度更新
-    audio.ontimeupdate = function(){
-        let per = (audio.currentTime / audio.duration) * 100;
-        fill.style.width = per + '%';
-        timeTxt.innerText = formatTime(audio.currentTime) + ' / ' + formatTime(audio.duration);
-    };
+        if(currentBtn === this){
+            currentAudio = null;
+            currentBtn = null;
+            fill.style.width = '0%';
+            return;
+        }
 
-    // 点击进度条跳转
-    bar.onclick = function(e){
-        e.stopPropagation();
-        let rect = this.getBoundingClientRect();
-        let x = e.clientX - rect.left;
-        let per = x / rect.width;
-        audio.currentTime = per * audio.duration;
-    };
+        const audio = new Audio(src);
+        audio.playbackRate = parseFloat(speedSel.value);
+        audio.play().catch(()=>{});
+        this.innerText = '■';
 
-    // 播放结束重置
-    audio.onended = function(){
-        btn.innerText = '▶';
-        playing = false;
-        fill.style.width = '0%';
-    };
+        currentAudio = audio;
+        currentBtn = this;
+
+        audio.ontimeupdate = function(){
+            let per = (audio.currentTime / audio.duration) * 100 || 0;
+            fill.style.width = per + '%';
+            timeTxt.innerText = formatTime(audio.currentTime) + ' / ' + formatTime(audio.duration);
+        };
+
+        audio.onended = function(){
+            btn.innerText = '▶';
+            fill.style.width = '0%';
+            currentAudio = null;
+            currentBtn = null;
+        };
+
+        bar.onclick = function(e){
+            e.stopPropagation();
+            if(!audio.duration) return;
+            let rect = this.getBoundingClientRect();
+            let x = e.clientX - rect.left;
+            let per = x / rect.width;
+            audio.currentTime = per * audio.duration;
+        };
+    });
 });
 </script>
 </body>
