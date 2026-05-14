@@ -118,22 +118,21 @@
             position: relative;
             z-index: 2;
         }
-        /* 专辑整体左右分栏布局 */
+        /* 专辑布局 */
         .album-wrap {
             display: flex;
-            align-items: flex-start;
-            gap: 60px;
+            align-items: center;
             justify-content: center;
-            flex-wrap: wrap;
+            gap: 60px;
+            flex-wrap: nowrap;
         }
-        /* 左侧圆形专辑区域 */
         .album-left {
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 25px;
         }
-        /* 圆形专辑封面 可点击 */
+        /* 圆形封面 可点击 */
         .circle-cover {
             width: 260px;
             height: 260px;
@@ -143,6 +142,7 @@
             transition: all 0.4s ease;
             border: 8px solid rgba(255,255,255,0.35);
             cursor: pointer;
+            user-select: none;
         }
         .circle-cover:hover {
             transform: scale(1.05) rotate(8deg);
@@ -154,7 +154,6 @@
             font-weight: 600;
             letter-spacing: 1px;
         }
-        /* MV按钮 */
         .mv-btn {
             display:inline-block;
             padding:12px 32px;
@@ -175,15 +174,47 @@
             box-shadow: 0 8px 25px rgba(180,100,255,0.35);
             background:linear-gradient(135deg, rgba(230,122,255,0.4), rgba(180,100,255,0.4));
         }
-        /* 右侧歌曲列表默认隐藏 */
-        .album-right {
-            flex: 1;
-            min-width: 320px;
-            text-align: left;
-            display: none;
+
+        /* 歌曲弹窗遮罩 */
+        .song-mask{
+            position: fixed;
+            inset:0;
+            background:rgba(0,0,0,0.4);
+            backdrop-filter: blur(6px);
+            z-index:1000;
+            display:none;
+            align-items:center;
+            justify-content:center;
+            padding:20px;
         }
-        .album-right.show{
-            display: block;
+        .song-mask.show{
+            display:flex;
+        }
+        /* 歌曲弹窗盒子 */
+        .song-popup{
+            width: 700px;
+            max-height: 85vh;
+            overflow-y:auto;
+            background:rgba(255,255,255,0.3);
+            backdrop-filter: blur(18px);
+            border-radius:25px;
+            padding:30px;
+            border:1px solid rgba(255,255,255,0.5);
+            box-shadow:0 10px 40px #b894e860;
+        }
+        .close-pop{
+            text-align:right;
+            margin-bottom:20px;
+        }
+        .close-btn{
+            background:#b894e8;
+            color:#fff;
+            border:none;
+            width:36px;
+            height:36px;
+            border-radius:50%;
+            font-size:18px;
+            cursor:pointer;
         }
         .song-item {
             margin: 25px 0;
@@ -200,7 +231,7 @@
             font-weight: 500;
             letter-spacing: 0.5px;
         }
-        /* 精致自定义播放器 */
+        /* 播放器样式 */
         .custom-audio {
             width: 100%;
             background: linear-gradient(135deg, rgba(248,216,240,0.7), rgba(224,200,255,0.7));
@@ -216,7 +247,6 @@
             border: 1px solid rgba(255,255,255,0.35);
             position: relative;
         }
-        /* 播放器呼吸柔光 */
         .custom-audio::before{
             content:"";
             position:absolute;
@@ -316,34 +346,17 @@
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(184,148,232,0.35);
         }
-        /* 取消移动端所有适配，和电脑端样式一致 */
-        @media (max-width: 768px) {
-            nav a {
-                margin: 0 22px;
-                font-size: 17px;
-            }
-            .container {
-                padding: 50px 35px;
-                margin: 130px auto 80px;
-            }
-            h1 {
-                font-size: 44px;
-            }
-            .album-wrap {
-                gap: 60px;
-            }
-            .circle-cover {
-                width: 260px;
-                height: 260px;
-            }
-            .album-right {
-                min-width: 320px;
-            }
+        /* 禁止移动端样式改动 全端统一 */
+        @media (max-width:768px){
+            nav a {margin:0 22px;font-size:17px;}
+            .container {padding:50px 35px;margin:130px auto 80px;}
+            h1 {font-size:44px;}
+            .circle-cover {width:260px;height:260px;}
+            .song-popup{width:95%;}
         }
     </style>
 </head>
 <body>
-    <!-- 导航 -->
     <nav id="mainNav">
         <a href="index.html">首页</a>
         <a href="notice.html">公告</a>
@@ -353,88 +366,88 @@
 
     <div class="container">
         <h1>作品专区</h1>
-
-        <!-- 左右分栏主体 -->
         <div class="album-wrap">
-            <!-- 左侧：圆形专辑+MV按钮 -->
             <div class="album-left">
                 <img class="circle-cover" src="https://raw.githubusercontent.com/NoxSom/NoxSom.github.io/020d2633aab03f4088c084cabb051793d8f34d7b/%E4%B8%93%E8%BE%911/%E6%97%A0%E6%A0%87%E9%A2%9869.png">
                 <div class="album-title">Single Album</div>
                 <a href="https://weixin.qq.com/sph/ARNqhihxBO" target="_blank" class="mv-btn">观看MV</a>
             </div>
+        </div>
+    </div>
 
-            <!-- 右侧：歌曲列表 + 播放器 -->
-            <div class="album-right">
-                <!-- 歌曲1 -->
-                <div class="song-item">
-                    <div class="song-name">Dream Magnet</div>
-                    <div class="custom-audio">
-                        <div class="player-top">
-                            <button class="play-btn" data-src="https://raw.githubusercontent.com/NoxSom/NoxSom.github.io/b67d49edafde59603bfa2cb03d3cfc1d0dbdfb51/%E4%B8%93%E8%BE%911/Dream%20Magnet.mp3">▶</button>
-                            <div class="progress-wrap">
-                                <div class="progress-bar">
-                                    <div class="progress-fill"></div>
-                                </div>
-                                <div class="time-text">00:00 / 00:00</div>
+    <!-- 歌曲弹窗 -->
+    <div class="song-mask" id="songMask">
+        <div class="song-popup">
+            <div class="close-pop">
+                <button class="close-btn" id="closePop">×</button>
+            </div>
+            <!-- 歌曲列表 -->
+            <div class="song-item">
+                <div class="song-name">Dream Magnet</div>
+                <div class="custom-audio">
+                    <div class="player-top">
+                        <button class="play-btn" data-src="https://raw.githubusercontent.com/NoxSom/NoxSom.github.io/b67d49edafde59603bfa2cb03d3cfc1d0dbdfb51/%E4%B8%93%E8%BE%911/Dream%20Magnet.mp3">▶</button>
+                        <div class="progress-wrap">
+                            <div class="progress-bar">
+                                <div class="progress-fill"></div>
                             </div>
-                        </div>
-                        <div class="player-controls">
-                            <select class="speed-select">
-                                <option value="0.75">0.75x</option>
-                                <option value="1" selected>1.0x</option>
-                                <option value="1.25">1.25x</option>
-                                <option value="1.5">1.5x</option>
-                            </select>
-                            <a class="down-btn" href="https://raw.githubusercontent.com/NoxSom/NoxSom/NoxSom.github.io/b67d49edafde59603bfa2cb03d3cfc1d0dbdfb51/%E4%B8%93%E8%BE%911/Dream%20Magnet.mp3" download>下载</a>
+                            <div class="time-text">00:00 / 00:00</div>
                         </div>
                     </div>
-                </div>
-                <!-- 歌曲2 -->
-                <div class="song-item">
-                    <div class="song-name">Loop (꿈의 고리)</div>
-                    <div class="custom-audio">
-                        <div class="player-top">
-                            <button class="play-btn" data-src="https://raw.githubusercontent.com/NoxSom/NoxSom.github.io/b67d49edafde59603bfa2cb03d3cfc1d0dbdfb51/%E4%B8%93%E8%BE%911/Loop.mp3">▶</button>
-                            <div class="progress-wrap">
-                                <div class="progress-bar">
-                                    <div class="progress-fill"></div>
-                                </div>
-                                <div class="time-text">00:00 / 00:00</div>
-                            </div>
-                        </div>
-                        <div class="player-controls">
-                            <select class="speed-select">
-                                <option value="0.75">0.75x</option>
-                                <option value="1" selected>1.0x</option>
-                                <option value="1.25">1.25x</option>
-                                <option value="1.5">1.5x</option>
-                            </select>
-                            <a class="down-btn" href="https://raw.githubusercontent.com/NoxSom/NoxSom/NoxSom.github.io/b67d49edafde59603bfa2cb03d3cfc1d0dbdfb51/%E4%B8%93%E8%BE%911/Loop.mp3" download>下载</a>
-                        </div>
+                    <div class="player-controls">
+                        <select class="speed-select">
+                            <option value="0.75">0.75x</option>
+                            <option value="1" selected>1.0x</option>
+                            <option value="1.25">1.25x</option>
+                            <option value="1.5">1.5x</option>
+                        </select>
+                        <a class="down-btn" href="https://raw.githubusercontent.com/NoxSom/NoxSom/NoxSom.github.io/b67d49edafde59603bfa2cb03d3cfc1d0dbdfb51/%E4%B8%93%E8%BE%911/Dream%20Magnet.mp3" download>下载</a>
                     </div>
                 </div>
-                <!-- 歌曲3 -->
-                <div class="song-item">
-                    <div class="song-name">hypnosia(Rewrite Ver.)</div>
-                    <div class="custom-audio">
-                        <div class="player-top">
-                            <button class="play-btn" data-src="https://raw.githubusercontent.com/NoxSom/NoxSom.github.io/b67d49edafde59603bfa2cb03d3cfc1d0dbdfb51/%E4%B8%93%E8%BE%911/hypnosia.mp3">▶</button>
-                            <div class="progress-wrap">
-                                <div class="progress-bar">
-                                    <div class="progress-fill"></div>
-                                </div>
-                                <div class="time-text">00:00 / 00:00</div>
+            </div>
+            <div class="song-item">
+                <div class="song-name">Loop (꿈의 고리)</div>
+                <div class="custom-audio">
+                    <div class="player-top">
+                        <button class="play-btn" data-src="https://raw.githubusercontent.com/NoxSom/NoxSom.github.io/b67d49edafde59603bfa2cb03d3cfc1d0dbdfb51/%E4%B8%93%E8%BE%911/Loop.mp3">▶</button>
+                        <div class="progress-wrap">
+                            <div class="progress-bar">
+                                <div class="progress-fill"></div>
                             </div>
+                            <div class="time-text">00:00 / 00:00</div>
                         </div>
-                        <div class="player-controls">
-                            <select class="speed-select">
-                                <option value="0.75">0.75x</option>
-                                <option value="1" selected>1.0x</option>
-                                <option value="1.25">1.25x</option>
-                                <option value="1.5">1.5x</option>
-                            </select>
-                            <a class="down-btn" href="https://raw.githubusercontent.com/NoxSom/NoxSom/NoxSom.github.io/b67d49edafde59603bfa2cb03d3cfc1d0dbdfb51/%E4%B8%93%E8%BE%911/hypnosia.mp3" download>下载</a>
+                    </div>
+                    <div class="player-controls">
+                        <select class="speed-select">
+                            <option value="0.75">0.75x</option>
+                            <option value="1" selected>1.0x</option>
+                            <option value="1.25">1.25x</option>
+                            <option value="1.5">1.5x</option>
+                        </select>
+                        <a class="down-btn" href="https://raw.githubusercontent.com/NoxSom/NoxSom/NoxSom.github.io/b67d49edafde59603bfa2cb03d3cfc1d0dbdfb51/%E4%B8%93%E8%BE%911/Loop.mp3" download>下载</a>
+                    </div>
+                </div>
+            </div>
+            <div class="song-item">
+                <div class="song-name">hypnosia(Rewrite Ver.)</div>
+                <div class="custom-audio">
+                    <div class="player-top">
+                        <button class="play-btn" data-src="https://raw.githubusercontent.com/NoxSom/NoxSom.github.io/b67d49edafde59603bfa2cb03d3cfc1d0dbdfb51/%E4%B8%93%E8%BE%911/hypnosia.mp3">▶</button>
+                        <div class="progress-wrap">
+                            <div class="progress-bar">
+                                <div class="progress-fill"></div>
+                            </div>
+                            <div class="time-text">00:00 / 00:00</div>
                         </div>
+                    </div>
+                    <div class="player-controls">
+                        <select class="speed-select">
+                            <option value="0.75">0.75x</option>
+                            <option value="1" selected>1.0x</option>
+                            <option value="1.25">1.25x</option>
+                            <option value="1.5">1.5x</option>
+                        </select>
+                        <a class="down-btn" href="https://raw.githubusercontent.com/NoxSom/NoxSom/NoxSom.github.io/b67d49edafde59603bfa2cb03d3cfc1d0dbdfb51/%E4%B8%93%E8%BE%911/hypnosia.mp3" download>下载</a>
                     </div>
                 </div>
             </div>
@@ -442,32 +455,35 @@
     </div>
 
 <script>
-// 导航滚动隐藏逻辑
+// 导航隐藏
 const mainNav = document.getElementById('mainNav');
 let lastScrollY = 0;
 window.addEventListener('scroll', () => {
     let currentScrollY = window.scrollY;
-    if (currentScrollY > lastScrollY && currentScrollY > 50) {
-        mainNav.classList.add('nav-hide');
-    } else {
-        mainNav.classList.remove('nav-hide');
-    }
+    mainNav.classList.toggle('nav-hide', currentScrollY > lastScrollY && currentScrollY > 50);
     lastScrollY = currentScrollY;
 });
 
-// 点击圆形封面 显示/隐藏歌曲列表
-const circleImg = document.querySelector('.circle-cover');
-const songBox = document.querySelector('.album-right');
-circleImg.addEventListener('click',()=>{
-    songBox.classList.toggle('show');
-})
+// 弹窗开关 百分百可用
+const cover = document.querySelector('.circle-cover');
+const mask = document.getElementById('songMask');
+const closeBtn = document.getElementById('closePop');
 
-// 格式化时间
+cover.onclick = function(){
+    mask.classList.add('show');
+};
+closeBtn.onclick = function(){
+    mask.classList.remove('show');
+};
+mask.onclick = function(e){
+    if(e.target === this) mask.classList.remove('show');
+};
+
+// 时间格式化
 function formatTime(s){
     if(isNaN(s)) return "00:00 / 00:00";
-    let m = Math.floor(s / 60);
-    let sec = Math.floor(s % 60);
-    return (m<10?'0'+m:m) + ':' + (sec<10?'0'+sec:sec);
+    let m = Math.floor(s/60),sec=Math.floor(s%60);
+    return `${m<10?'0'+m:m}:${sec<10?'0'+sec:sec}`;
 }
 
 // 播放器逻辑
@@ -480,15 +496,12 @@ document.querySelectorAll('.play-btn').forEach(btn=>{
     let speedSel = wrap.querySelector('.speed-select');
     let playing = false;
 
-    speedSel.onchange = function(){
-        audio.playbackRate = parseFloat(this.value);
-    };
+    speedSel.onchange = ()=>audio.playbackRate = +speedSel.value;
 
-    btn.onclick = function(e){
-        e.stopPropagation();
+    btn.onclick = function(){
         if(!playing){
             audio.src = this.dataset.src;
-            audio.playbackRate = parseFloat(speedSel.value);
+            audio.playbackRate = +speedSel.value;
             audio.play();
             this.innerText = '■';
             playing = true;
@@ -499,36 +512,26 @@ document.querySelectorAll('.play-btn').forEach(btn=>{
         }
     };
 
-    audio.ontimeupdate = function(){
+    audio.ontimeupdate = ()=>{
         if(audio.duration){
-            let per = (audio.currentTime / audio.duration) * 100;
-            fill.style.width = per + '%';
-            timeTxt.innerText = formatTime(audio.currentTime) + ' / ' + formatTime(audio.duration);
+            fill.style.width = (audio.currentTime/audio.duration)*100 + '%';
+            timeTxt.innerText = formatTime(audio.currentTime)+' / '+formatTime(audio.duration);
         }
     };
 
-    bar.onclick = function(e){
-        e.stopPropagation();
-        if(!audio.duration) return;
-        let rect = this.getBoundingClientRect();
-        let x = e.clientX - rect.left;
-        let per = x / rect.width;
-        audio.currentTime = per * audio.duration;
+    bar.onclick = e=>{
+        if(!audio.duration)return;
+        let rect = bar.getBoundingClientRect();
+        let pos = (e.clientX - rect.left)/rect.width;
+        audio.currentTime = pos * audio.duration;
     };
 
-    audio.onended = function(){
-        btn.innerText = '▶';
-        playing = false;
-        fill.style.width = '0%';
+    audio.onended = ()=>{
+        btn.innerText='▶';playing=false;fill.style.width='0%';
     };
-    // 切页面暂停
     document.addEventListener('visibilitychange',()=>{
-        if(document.hidden){
-            audio.pause();
-            btn.innerText = '▶';
-            playing = false;
-        }
-    })
+        if(document.hidden){audio.pause();btn.innerText='▶';playing=false;}
+    });
 });
 </script>
 </body>
