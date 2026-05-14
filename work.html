@@ -133,7 +133,7 @@
             align-items: center;
             gap: 25px;
         }
-        /* 圆形专辑封面 */
+        /* 圆形专辑封面 可点击 */
         .circle-cover {
             width: 260px;
             height: 260px;
@@ -142,6 +142,7 @@
             box-shadow: 0 8px 25px rgba(150,110,200,0.3);
             transition: all 0.4s ease;
             border: 8px solid rgba(255,255,255,0.35);
+            cursor: pointer;
         }
         .circle-cover:hover {
             transform: scale(1.05) rotate(8deg);
@@ -174,11 +175,15 @@
             box-shadow: 0 8px 25px rgba(180,100,255,0.35);
             background:linear-gradient(135deg, rgba(230,122,255,0.4), rgba(180,100,255,0.4));
         }
-        /* 右侧歌曲列表区域 */
+        /* 右侧歌曲列表默认隐藏 */
         .album-right {
             flex: 1;
             min-width: 320px;
             text-align: left;
+            display: none;
+        }
+        .album-right.show{
+            display: block;
         }
         .song-item {
             margin: 25px 0;
@@ -311,29 +316,28 @@
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(184,148,232,0.35);
         }
-        /* 移动端适配 */
+        /* 取消移动端所有适配，和电脑端样式一致 */
         @media (max-width: 768px) {
             nav a {
-                margin: 0 12px;
-                font-size: 15px;
+                margin: 0 22px;
+                font-size: 17px;
             }
             .container {
-                padding: 35px 20px;
-                margin: 110px auto 50px;
+                padding: 50px 35px;
+                margin: 130px auto 80px;
             }
             h1 {
-                font-size: 32px;
+                font-size: 44px;
             }
             .album-wrap {
-                gap: 40px;
+                gap: 60px;
             }
             .circle-cover {
-                width: 200px;
-                height: 200px;
+                width: 260px;
+                height: 260px;
             }
             .album-right {
-                width: 100%;
-                min-width: unset;
+                min-width: 320px;
             }
         }
     </style>
@@ -450,6 +454,13 @@ window.addEventListener('scroll', () => {
     }
     lastScrollY = currentScrollY;
 });
+
+// 点击圆形封面 显示/隐藏歌曲列表
+const circleImg = document.querySelector('.circle-cover');
+const songBox = document.querySelector('.album-right');
+circleImg.addEventListener('click',()=>{
+    songBox.classList.toggle('show');
+})
 
 // 格式化时间
 function formatTime(s){
