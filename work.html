@@ -15,180 +15,354 @@
             opacity: 0;
             animation: fadeIn 1.2s ease forwards;
             background: linear-gradient(135deg, #ffcfe8 0%, #e0c8ff 50%, #f8d8f0 100%);
-            min-height: 100vh;
             background-attachment: fixed;
+            min-height: 100vh;
             overflow-x: hidden;
         }
         @keyframes fadeIn {
             to { opacity: 1; }
         }
-        /* 导航栏 完全同步首页 */
+        /* 全局滚动条美化 */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-thumb { background: #c8a6e5; border-radius: 10px; }
+        ::-webkit-scrollbar-track { background: rgba(255,255,255,0.2); }
+
+        /* 顶部导航栏美化 */
         nav#mainNav {
             width: 100%;
-            padding: 25px 0;
+            padding: 28px 0;
             text-align: center;
-            background: rgba(255,255,255,0.25);
-            backdrop-filter: blur(8px);
-            box-shadow: 0 2px 15px rgba(180,140,220,0.2);
+            background: rgba(255,255,255,0.28);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 3px 20px rgba(180,140,220,0.25);
             position: fixed;
             top: 0;
             left: 0;
             z-index: 999;
-            transition: transform 0.4s ease;
+            transition: transform 0.4s ease, background 0.3s ease;
         }
         nav.nav-hide {
             transform: translateY(-100%);
         }
+        nav#mainNav:hover {
+            background: rgba(255,255,255,0.35);
+        }
         nav a {
             color: #7a4b8e;
             text-decoration: none;
-            margin: 0 18px;
+            margin: 0 22px;
             font-size: 17px;
-            font-weight: 500;
-            transition: all 0.3s ease;
+            font-weight: 550;
+            transition: all 0.35s ease;
+            position: relative;
+        }
+        nav a::after {
+            content: '';
+            width: 0;
+            height: 2px;
+            background: #b878c9;
+            position: absolute;
+            bottom: -6px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+            transition: 0.3s ease;
         }
         nav a:hover {
             color: #b878c9;
-            text-shadow: 0 0 8px rgba(210,160,240,0.6);
+            text-shadow: 0 0 10px rgba(210,160,240,0.7);
             letter-spacing: 2px;
         }
+        nav a:hover::after {
+            width: 100%;
+        }
+        /* 主容器美化 */
         .container {
-            width: 90%;
-            max-width: 900px;
-            margin: 120px auto 60px;
-            padding: 40px;
-            background: rgba(255,255,255,0.2);
-            backdrop-filter: blur(10px);
-            border-radius: 24px;
+            width: 92%;
+            max-width: 950px;
+            margin: 130px auto 80px;
+            padding: 50px 35px;
+            background: rgba(255,255,255,0.22);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-radius: 30px;
             text-align: center;
+            box-shadow: 0 6px 30px rgba(165,125,210,0.18);
+            position: relative;
+            overflow: hidden;
+        }
+        /* 容器流光效果 */
+        .container::before {
+            content: "";
+            position: absolute;
+            top: -150%;
+            left: -150%;
+            width: 400%;
+            height: 400%;
+            background: radial-gradient(circle, rgba(220,180,255,0.15) 0%, transparent 60%);
+            animation: streamLight 8s linear infinite;
+        }
+        @keyframes streamLight {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
         h1 {
-            font-size: 42px;
-            color: #6b3b80;
-            margin-bottom: 40px;
+            font-size: 44px;
+            background: linear-gradient(135deg, #80489c, #b878c9);
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 50px;
+            letter-spacing: 3px;
+            text-shadow: 0 2px 8px rgba(107,59,128,0.15);
+            position: relative;
+            z-index: 2;
         }
+        /* 专辑卡片极致美化 */
         .album-card {
             width: 100%;
-            background: rgba(255,255,255,0.35);
-            border-radius: 18px;
-            padding: 20px;
-            margin-bottom: 20px;
+            background: rgba(255,255,255,0.38);
+            border-radius: 24px;
+            padding: 30px 25px;
+            margin-bottom: 25px;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.4s cubic-bezier(0.2,0.8,0.2,1);
+            border: 1px solid rgba(255,255,255,0.4);
+            position: relative;
+            overflow: hidden;
+        }
+        .album-card::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.25) 50%, transparent 70%);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+        .album-card:hover::after {
+            transform: translateX(100%);
         }
         .album-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 25px rgba(180,140,220,0.3);
+            transform: translateY(-6px) scale(1.01);
+            box-shadow: 0 12px 35px rgba(180,140,220,0.35);
         }
         .album-cover {
-            width: 180px;
-            border-radius: 12px;
-            margin-bottom: 10px;
+            width: 190px;
+            border-radius: 16px;
+            margin-bottom: 15px;
+            box-shadow: 0 5px 18px rgba(150,110,200,0.25);
+            transition: transform 0.3s ease, box-shadow 0.3s;
+        }
+        .album-card:hover .album-cover {
+            transform: rotate(2deg) scale(1.05);
+            box-shadow: 0 8px 25px rgba(150,110,200,0.4);
         }
         .album-name {
-            font-size: 20px;
+            font-size: 22px;
             color: #6b3b80;
-            font-weight: bold;
+            font-weight: 600;
+            letter-spacing: 1px;
         }
         .arrow-tip {
             color: #9977aa;
-            margin-top: 8px;
+            margin-top: 12px;
+            font-size: 15px;
+            transition: color 0.3s;
         }
+        .album-card:hover .arrow-tip {
+            color: #b878c9;
+        }
+        /* MV按钮升级 */
+        .mv-btn {
+            display:inline-block;
+            padding:12px 28px;
+            background:linear-gradient(135deg, rgba(230,122,255,0.3), rgba(180,100,255,0.3));
+            backdrop-filter:blur(12px);
+            -webkit-backdrop-filter:blur(12px);
+            border:1px solid rgba(255,255,255,0.45);
+            color:#fff;
+            border-radius:15px;
+            text-decoration:none;
+            font-weight:550;
+            letter-spacing:1.5px;
+            box-shadow: 0 5px 20px rgba(180,100,255,0.25);
+            transition: all 0.3s ease;
+            margin-top:18px;
+            position: relative;
+            overflow: hidden;
+        }
+        .mv-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(180,100,255,0.35);
+            background:linear-gradient(135deg, rgba(230,122,255,0.4), rgba(180,100,255,0.4));
+        }
+        /* 歌曲列表 */
         .song-list {
             display: none;
-            margin-top: 20px;
-            padding-top: 20px;
-            border-top: 1px solid rgba(180,140,220,0.3);
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 1px dashed rgba(180,140,220,0.45);
         }
         .song-item {
-            margin: 25px 0;
+            margin: 30px 0;
+            animation: songFade 0.5s ease forwards;
+        }
+        @keyframes songFade {
+            from{opacity:0;transform: translateY(15px);}
+            to{opacity:1;transform: translateY(0);}
         }
         .song-name {
             color: #7a4b8e;
-            margin-bottom: 12px;
-            font-size:18px;
+            margin-bottom: 15px;
+            font-size: 19px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
         }
-        /* 自定义播放器 */
+        /* 精致自定义播放器 */
         .custom-audio {
             width: 100%;
-            background: linear-gradient(135deg, rgba(248,216,240,0.6), rgba(224,200,255,0.6));
-            backdrop-filter: blur(8px);
-            border-radius: 24px;
-            padding: 16px 20px;
+            background: linear-gradient(135deg, rgba(248,216,240,0.7), rgba(224,200,255,0.7));
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 28px;
+            padding: 20px 25px;
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 15px;
             pointer-events: auto;
+            box-shadow: 0 4px 15px rgba(170,130,210,0.2);
+            border: 1px solid rgba(255,255,255,0.35);
+            position: relative;
+        }
+        /* 播放器呼吸柔光 */
+        .custom-audio::before{
+            content:"";
+            position:absolute;
+            inset:0;
+            border-radius:28px;
+            box-shadow: 0 0 15px rgba(184,148,232,0.3);
+            animation: breathe 3s ease-in-out infinite;
+        }
+        @keyframes breathe{
+            0%,100%{opacity:0.5;}
+            50%{opacity:0.9;}
         }
         .player-top {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 15px;
+            position: relative;
+            z-index:2;
         }
         .play-btn {
-            background: #b894e8;
+            background: linear-gradient(135deg, #c7a0f0, #b894e8);
             border: none;
             color: #fff;
-            width: 40px;
-            height: 40px;
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
             cursor: pointer;
-            font-size:18px;
+            font-size: 19px;
             flex-shrink: 0;
+            box-shadow: 0 3px 12px rgba(184,148,232,0.4);
+            transition: all 0.3s ease;
+        }
+        .play-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 18px rgba(184,148,232,0.5);
         }
         .progress-wrap {
             flex: 1;
         }
         .progress-bar {
             width: 100%;
-            height: 6px;
-            background: rgba(255,255,255,0.4);
-            border-radius: 6px;
+            height: 7px;
+            background: rgba(255,255,255,0.5);
+            border-radius: 10px;
             cursor: pointer;
             position: relative;
         }
         .progress-fill {
-            height: 6px;
+            height: 7px;
             background: linear-gradient(90deg, #e8a8e0, #b894e8);
-            border-radius: 6px;
+            border-radius: 10px;
             width: 0%;
+            transition: width 0.1s linear;
         }
         .time-text {
             color: #6b3b80;
-            font-size: 13px;
-            margin-top:6px;
-            text-align:right;
+            font-size: 14px;
+            margin-top: 8px;
+            text-align: right;
+            font-weight: 500;
         }
         .player-controls {
             display: flex;
             justify-content: flex-end;
-            gap: 12px;
+            gap: 15px;
             align-items: center;
+            position: relative;
+            z-index:2;
         }
         .speed-select {
-            background:rgba(255,255,255,0.3);
-            border:1px solid rgba(255,255,255,0.4);
+            background:rgba(255,255,255,0.4);
+            border:1px solid rgba(255,255,255,0.5);
             color:#6b3b80;
-            border-radius:8px;
-            padding:6px 8px;
+            border-radius:10px;
+            padding:7px 10px;
             outline:none;
             font-size:14px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .speed-select:hover {
+            background:rgba(255,255,255,0.55);
         }
         .down-btn {
-            background:rgba(184,148,232,0.4);
+            background:linear-gradient(135deg, rgba(198,165,240,0.5), rgba(184,148,232,0.5));
             border:none;
             color:#fff;
-            padding:6px 14px;
-            border-radius:8px;
+            padding:7px 16px;
+            border-radius:10px;
             cursor:pointer;
             font-size:14px;
             text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 500;
         }
-        /* 移动端适配 */
+        .down-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(184,148,232,0.35);
+        }
+        /* 移动端全局适配 */
         @media (max-width: 768px) {
             nav a {
-                margin: 0 10px;
+                margin: 0 12px;
                 font-size: 15px;
+            }
+            .container {
+                padding: 35px 20px;
+                margin: 110px auto 50px;
+            }
+            h1 {
+                font-size: 32px;
+            }
+            .album-cover {
+                width: 150px;
+            }
+            .album-card {
+                padding: 22px 15px;
+            }
+            .custom-audio {
+                padding: 15px 18px;
+            }
+            .play-btn {
+                width: 38px;
+                height: 38px;
+                font-size: 16px;
             }
         }
     </style>
@@ -208,24 +382,7 @@
         <div class="album-card" onclick="toggleAlbum(this)">
             <img class="album-cover" src="https://raw.githubusercontent.com/NoxSom/NoxSom.github.io/020d2633aab03f4088c084cabb051793d8f34d7b/%E4%B8%93%E8%BE%911/%E6%97%A0%E6%A0%87%E9%A2%9869.png">
             <div class="album-name">Single Album</div>
-            <div style="margin-top:15px;text-align:center;">
-              <a href="https://weixin.qq.com/sph/ARNqhihxBO"
-                 target="_blank"
-                 style="display:inline-block;
-                        padding:10px 24px;
-                        background:linear-gradient(135deg, rgba(230,122,255,0.25), rgba(180,100,255,0.25));
-                        backdrop-filter:blur(12px);
-                        -webkit-backdrop-filter:blur(12px);
-                        border:1px solid rgba(255,255,255,0.3);
-                        color:#fff;
-                        border-radius:12px;
-                        text-decoration:none;
-                        font-weight:500;
-                        letter-spacing:1px;
-                        box-shadow: 0 4px 15px rgba(180,100,255,0.2);">
-                 MV
-              </a>
-            </div>
+            <a href="https://weixin.qq.com/sph/ARNqhihxBO" target="_blank" class="mv-btn">MV</a>
             <div class="arrow-tip">点击展开 / 收起 ▼</div>
 
             <div class="song-list">
@@ -249,7 +406,7 @@
                                 <option value="1.25">1.25x</option>
                                 <option value="1.5">1.5x</option>
                             </select>
-                            <a class="down-btn" href="https://raw.githubusercontent.com/NoxSom/NoxSom.github.io/b67d49edafde59603bfa2cb03d3cfc1d0dbdfb51/%E4%B8%93%E8%BE%911/Dream%20Magnet.mp3" download>下载</a>
+                            <a class="down-btn" href="https://raw.githubusercontent.com/NoxSom/NoxSom/NoxSom.github.io/b67d49edafde59603bfa2cb03d3cfc1d0dbdfb51/%E4%B8%93%E8%BE%911/Dream%20Magnet.mp3" download>下载</a>
                         </div>
                     </div>
                 </div>
@@ -273,7 +430,7 @@
                                 <option value="1.25">1.25x</option>
                                 <option value="1.5">1.5x</option>
                             </select>
-                            <a class="down-btn" href="https://raw.githubusercontent.com/NoxSom/NoxSom.github.io/b67d49edafde59603bfa2cb03d3cfc1d0dbdfb51/%E4%B8%93%E8%BE%911/Loop.mp3" download>下载</a>
+                            <a class="down-btn" href="https://raw.githubusercontent.com/NoxSom/NoxSom/NoxSom.github.io/b67d49edafde59603bfa2cb03d3cfc1d0dbdfb51/%E4%B8%93%E8%BE%911/Loop.mp3" download>下载</a>
                         </div>
                     </div>
                 </div>
@@ -297,7 +454,7 @@
                                 <option value="1.25">1.25x</option>
                                 <option value="1.5">1.5x</option>
                             </select>
-                            <a class="down-btn" href="https://raw.githubusercontent.com/NoxSom/NoxSom/github.io/b67d49edafde59603bfa2cb03d3cfc1d0dbdfb51/%E4%B8%93%E8%BE%911/hypnosia.mp3" download>下载</a>
+                            <a class="down-btn" href="https://raw.githubusercontent.com/NoxSom/NoxSom/NoxSom.github.io/b67d49edafde59603bfa2cb03d3cfc1d0dbdfb51/%E4%B8%93%E8%BE%911/hypnosia.mp3" download>下载</a>
                         </div>
                     </div>
                 </div>
