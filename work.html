@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>作品 | NoxSom</title>
     <style>
         * {
@@ -80,7 +80,7 @@
         /* 主容器美化 */
         .container {
             width: 92%;
-            max-width: 950px;
+            max-width: 1100px;
             margin: 130px auto 80px;
             padding: 50px 35px;
             background: rgba(255,255,255,0.22);
@@ -118,71 +118,45 @@
             position: relative;
             z-index: 2;
         }
-        /* 专辑卡片极致美化 */
-        .album-card {
-            width: 100%;
-            background: rgba(255,255,255,0.38);
-            border-radius: 24px;
-            padding: 30px 25px;
-            margin-bottom: 25px;
-            transition: all 0.4s cubic-bezier(0.2,0.8,0.2,1);
-            border: 1px solid rgba(255,255,255,0.4);
-            position: relative;
-            overflow: hidden;
+        /* 专辑整体左右分栏布局 */
+        .album-wrap {
+            display: flex;
+            align-items: flex-start;
+            gap: 60px;
+            justify-content: center;
+            flex-wrap: wrap;
         }
-        /* 仅头部区域可点击展开，播放器区域禁止冒泡 */
-        .album-head {
-            cursor: pointer;
+        /* 左侧圆形专辑区域 */
+        .album-left {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 25px;
         }
-        .album-card::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.25) 50%, transparent 70%);
-            transform: translateX(-100%);
-            transition: transform 0.6s ease;
-            pointer-events: none;
+        /* 圆形专辑封面 */
+        .circle-cover {
+            width: 260px;
+            height: 260px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 0 8px 25px rgba(150,110,200,0.3);
+            transition: all 0.4s ease;
+            border: 8px solid rgba(255,255,255,0.35);
         }
-        .album-card:hover::after {
-            transform: translateX(100%);
+        .circle-cover:hover {
+            transform: scale(1.05) rotate(8deg);
+            box-shadow: 0 12px 35px rgba(150,110,200,0.45);
         }
-        .album-card:hover {
-            transform: translateY(-6px) scale(1.01);
-            box-shadow: 0 12px 35px rgba(180,140,220,0.35);
-        }
-        .album-cover {
-            width: 190px;
-            border-radius: 16px;
-            margin-bottom: 15px;
-            box-shadow: 0 5px 18px rgba(150,110,200,0.25);
-            transition: transform 0.3s ease, box-shadow 0.3s;
-        }
-        .album-card:hover .album-cover {
-            transform: rotate(2deg) scale(1.05);
-            box-shadow: 0 8px 25px rgba(150,110,200,0.4);
-        }
-        .album-name {
-            font-size: 22px;
+        .album-title {
+            font-size: 24px;
             color: #6b3b80;
             font-weight: 600;
             letter-spacing: 1px;
         }
-        .arrow-tip {
-            color: #9977aa;
-            margin-top: 12px;
-            font-size: 15px;
-            transition: color 0.3s;
-        }
-        .album-card:hover .arrow-tip {
-            color: #b878c9;
-        }
-        /* MV按钮升级 */
+        /* MV按钮 */
         .mv-btn {
             display:inline-block;
-            padding:12px 28px;
+            padding:12px 32px;
             background:linear-gradient(135deg, rgba(230,122,255,0.3), rgba(180,100,255,0.3));
             backdrop-filter:blur(12px);
             -webkit-backdrop-filter:blur(12px);
@@ -194,27 +168,21 @@
             letter-spacing:1.5px;
             box-shadow: 0 5px 20px rgba(180,100,255,0.25);
             transition: all 0.3s ease;
-            margin-top:18px;
-            position: relative;
-            overflow: hidden;
         }
         .mv-btn:hover {
             transform: translateY(-3px);
             box-shadow: 0 8px 25px rgba(180,100,255,0.35);
             background:linear-gradient(135deg, rgba(230,122,255,0.4), rgba(180,100,255,0.4));
         }
-        /* 歌曲列表 */
-        .song-list {
-            display: none;
-            margin-top: 30px;
-            padding-top: 30px;
-            border-top: 1px dashed rgba(180,140,220,0.45);
+        /* 右侧歌曲列表区域 */
+        .album-right {
+            flex: 1;
+            min-width: 320px;
+            text-align: left;
         }
         .song-item {
-            margin: 30px 0;
+            margin: 25px 0;
             animation: songFade 0.5s ease forwards;
-            /* 阻止内部点击冒泡到卡片 */
-            pointer-events: auto;
         }
         @keyframes songFade {
             from{opacity:0;transform: translateY(15px);}
@@ -222,28 +190,26 @@
         }
         .song-name {
             color: #7a4b8e;
-            margin-bottom: 15px;
-            font-size: 19px;
+            margin-bottom: 12px;
+            font-size: 18px;
             font-weight: 500;
             letter-spacing: 0.5px;
         }
-        /* 播放器区域禁止触发收起 */
+        /* 精致自定义播放器 */
         .custom-audio {
             width: 100%;
             background: linear-gradient(135deg, rgba(248,216,240,0.7), rgba(224,200,255,0.7));
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             border-radius: 28px;
-            padding: 20px 25px;
+            padding: 18px 22px;
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 12px;
+            pointer-events: auto;
             box-shadow: 0 4px 15px rgba(170,130,210,0.2);
             border: 1px solid rgba(255,255,255,0.35);
             position: relative;
-            /* 核心修复：阻止点击冒泡 */
-            pointer-events: auto;
-            z-index: 10;
         }
         /* 播放器呼吸柔光 */
         .custom-audio::before{
@@ -253,7 +219,6 @@
             border-radius:28px;
             box-shadow: 0 0 15px rgba(184,148,232,0.3);
             animation: breathe 3s ease-in-out infinite;
-            pointer-events: none;
         }
         @keyframes breathe{
             0%,100%{opacity:0.5;}
@@ -270,11 +235,11 @@
             background: linear-gradient(135deg, #c7a0f0, #b894e8);
             border: none;
             color: #fff;
-            width: 44px;
-            height: 44px;
+            width: 42px;
+            height: 42px;
             border-radius: 50%;
             cursor: pointer;
-            font-size: 19px;
+            font-size: 18px;
             flex-shrink: 0;
             box-shadow: 0 3px 12px rgba(184,148,232,0.4);
             transition: all 0.3s ease;
@@ -288,14 +253,14 @@
         }
         .progress-bar {
             width: 100%;
-            height: 7px;
+            height: 6px;
             background: rgba(255,255,255,0.5);
             border-radius: 10px;
             cursor: pointer;
             position: relative;
         }
         .progress-fill {
-            height: 7px;
+            height: 6px;
             background: linear-gradient(90deg, #e8a8e0, #b894e8);
             border-radius: 10px;
             width: 0%;
@@ -303,38 +268,29 @@
         }
         .time-text {
             color: #6b3b80;
-            font-size: 14px;
-            margin-top: 8px;
+            font-size: 13px;
+            margin-top: 6px;
             text-align: right;
             font-weight: 500;
         }
         .player-controls {
             display: flex;
             justify-content: flex-end;
-            gap: 15px;
+            gap: 12px;
             align-items: center;
             position: relative;
             z-index:2;
         }
-        /* 修复手机端倍速选择框点击失灵 */
         .speed-select {
             background:rgba(255,255,255,0.4);
             border:1px solid rgba(255,255,255,0.5);
             color:#6b3b80;
             border-radius:10px;
-            padding:7px 10px;
+            padding:6px 9px;
             outline:none;
-            font-size:14px;
+            font-size:13px;
             cursor: pointer;
             transition: 0.3s;
-            position: relative;
-            z-index: 99;
-            -webkit-appearance: none;
-            appearance: none;
-            padding-right: 25px;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%236b3b80' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 8px center;
         }
         .speed-select:hover {
             background:rgba(255,255,255,0.55);
@@ -343,21 +299,19 @@
             background:linear-gradient(135deg, rgba(198,165,240,0.5), rgba(184,148,232,0.5));
             border:none;
             color:#fff;
-            padding:7px 16px;
+            padding:6px 14px;
             border-radius:10px;
             cursor:pointer;
-            font-size:14px;
+            font-size:13px;
             text-decoration: none;
             transition: all 0.3s ease;
             font-weight: 500;
-            position: relative;
-            z-index:99;
         }
         .down-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(184,148,232,0.35);
         }
-        /* 移动端全局适配 */
+        /* 移动端适配 */
         @media (max-width: 768px) {
             nav a {
                 margin: 0 12px;
@@ -370,33 +324,22 @@
             h1 {
                 font-size: 32px;
             }
-            .album-cover {
-                width: 150px;
+            .album-wrap {
+                gap: 40px;
             }
-            .album-card {
-                padding: 22px 15px;
+            .circle-cover {
+                width: 200px;
+                height: 200px;
             }
-            .custom-audio {
-                padding: 15px 18px;
-            }
-            .play-btn {
-                width: 38px;
-                height: 38px;
-                font-size: 16px;
-            }
-            .speed-select {
-                font-size: 13px;
-                padding:6px 8px 6px 8px;
-            }
-            .down-btn {
-                font-size:13px;
-                padding:6px 12px;
+            .album-right {
+                width: 100%;
+                min-width: unset;
             }
         }
     </style>
 </head>
 <body>
-    <!-- 导航完全和首页一致 -->
+    <!-- 导航 -->
     <nav id="mainNav">
         <a href="index.html">首页</a>
         <a href="notice.html">公告</a>
@@ -407,16 +350,17 @@
     <div class="container">
         <h1>作品专区</h1>
 
-        <div class="album-card">
-            <!-- 仅头部可点击展开 -->
-            <div class="album-head" onclick="toggleAlbum(this.parentElement)">
-                <img class="album-cover" src="https://raw.githubusercontent.com/NoxSom/NoxSom.github.io/020d2633aab03f4088c084cabb051793d8f34d7b/%E4%B8%93%E8%BE%911/%E6%97%A0%E6%A0%87%E9%A2%9869.png">
-                <div class="album-name">Single Album</div>
-                <a href="https://weixin.qq.com/sph/ARNqhihxBO" target="_blank" class="mv-btn">MV</a>
-                <div class="arrow-tip">点击展开 / 收起 ▼</div>
+        <!-- 左右分栏主体 -->
+        <div class="album-wrap">
+            <!-- 左侧：圆形专辑+MV按钮 -->
+            <div class="album-left">
+                <img class="circle-cover" src="https://raw.githubusercontent.com/NoxSom/NoxSom.github.io/020d2633aab03f4088c084cabb051793d8f34d7b/%E4%B8%93%E8%BE%911/%E6%97%A0%E6%A0%87%E9%A2%9869.png">
+                <div class="album-title">Single Album</div>
+                <a href="https://weixin.qq.com/sph/ARNqhihxBO" target="_blank" class="mv-btn">观看MV</a>
             </div>
 
-            <div class="song-list">
+            <!-- 右侧：歌曲列表 + 播放器 -->
+            <div class="album-right">
                 <!-- 歌曲1 -->
                 <div class="song-item">
                     <div class="song-name">Dream Magnet</div>
@@ -437,7 +381,7 @@
                                 <option value="1.25">1.25x</option>
                                 <option value="1.5">1.5x</option>
                             </select>
-                            <a class="down-btn" href="https://raw.githubusercontent.com/NoxSom/NoxSom.github.io/b67d49edafde59603bfa2cb03d3cfc1d0dbdfb51/%E4%B8%93%E8%BE%911/Dream%20Magnet.mp3" download>下载</a>
+                            <a class="down-btn" href="https://raw.githubusercontent.com/NoxSom/NoxSom/NoxSom.github.io/b67d49edafde59603bfa2cb03d3cfc1d0dbdfb51/%E4%B8%93%E8%BE%911/Dream%20Magnet.mp3" download>下载</a>
                         </div>
                     </div>
                 </div>
@@ -461,7 +405,7 @@
                                 <option value="1.25">1.25x</option>
                                 <option value="1.5">1.5x</option>
                             </select>
-                            <a class="down-btn" href="https://raw.githubusercontent.com/NoxSom/NoxSom.github.io/b67d49edafde59603bfa2cb03d3cfc1d0dbdfb51/%E4%B8%93%E8%BE%911/Loop.mp3" download>下载</a>
+                            <a class="down-btn" href="https://raw.githubusercontent.com/NoxSom/NoxSom/NoxSom.github.io/b67d49edafde59603bfa2cb03d3cfc1d0dbdfb51/%E4%B8%93%E8%BE%911/Loop.mp3" download>下载</a>
                         </div>
                     </div>
                 </div>
@@ -485,7 +429,7 @@
                                 <option value="1.25">1.25x</option>
                                 <option value="1.5">1.5x</option>
                             </select>
-                            <a class="down-btn" href="https://raw.githubusercontent.com/NoxSom/NoxSom.github.io/b67d49edafde59603bfa2cb03d3cfc1d0dbdfb51/%E4%B8%93%E8%BE%911/hypnosia.mp3" download>下载</a>
+                            <a class="down-btn" href="https://raw.githubusercontent.com/NoxSom/NoxSom/NoxSom.github.io/b67d49edafde59603bfa2cb03d3cfc1d0dbdfb51/%E4%B8%93%E8%BE%911/hypnosia.mp3" download>下载</a>
                         </div>
                     </div>
                 </div>
@@ -494,7 +438,7 @@
     </div>
 
 <script>
-// 导航滚动隐藏逻辑 同步首页
+// 导航滚动隐藏逻辑
 const mainNav = document.getElementById('mainNav');
 let lastScrollY = 0;
 window.addEventListener('scroll', () => {
@@ -507,12 +451,6 @@ window.addEventListener('scroll', () => {
     lastScrollY = currentScrollY;
 });
 
-// 展开收起
-function toggleAlbum(card){
-    let list = card.querySelector('.song-list');
-    list.style.display = list.style.display === 'block' ? 'none' : 'block';
-}
-
 // 格式化时间
 function formatTime(s){
     if(isNaN(s)) return "00:00 / 00:00";
@@ -521,31 +459,26 @@ function formatTime(s){
     return (m<10?'0'+m:m) + ':' + (sec<10?'0'+sec:sec);
 }
 
-// 播放器独立实例 + 阻止冒泡 彻底修复所有BUG
-document.querySelectorAll('.custom-audio').forEach(playerBox => {
+// 播放器逻辑
+document.querySelectorAll('.play-btn').forEach(btn=>{
     let audio = new Audio();
-    let btn = playerBox.querySelector('.play-btn');
-    let bar = playerBox.querySelector('.progress-bar');
-    let fill = playerBox.querySelector('.progress-fill');
-    let timeTxt = playerBox.querySelector('.time-text');
-    let speedSel = playerBox.querySelector('.speed-select');
+    let wrap = btn.closest('.custom-audio');
+    let bar = wrap.querySelector('.progress-bar');
+    let fill = wrap.querySelector('.progress-fill');
+    let timeTxt = wrap.querySelector('.time-text');
+    let speedSel = wrap.querySelector('.speed-select');
     let playing = false;
 
-    // 阻止播放器内部所有点击向上冒泡（核心解决点倍速收起列表）
-    playerBox.addEventListener('click',e=>e.stopPropagation());
-
-    // 倍速切换
-    speedSel.addEventListener('change',function(){
+    speedSel.onchange = function(){
         audio.playbackRate = parseFloat(this.value);
-    });
+    };
 
-    // 播放暂停
-    btn.addEventListener('click',function(e){
+    btn.onclick = function(e){
         e.stopPropagation();
         if(!playing){
             audio.src = this.dataset.src;
             audio.playbackRate = parseFloat(speedSel.value);
-            audio.play().catch(e=>{});
+            audio.play();
             this.innerText = '■';
             playing = true;
         }else{
@@ -553,11 +486,39 @@ document.querySelectorAll('.custom-audio').forEach(playerBox => {
             this.innerText = '▶';
             playing = false;
         }
-    });
+    };
 
-    // 进度更新
     audio.ontimeupdate = function(){
         if(audio.duration){
             let per = (audio.currentTime / audio.duration) * 100;
             fill.style.width = per + '%';
-            timeTxt.innerTex
+            timeTxt.innerText = formatTime(audio.currentTime) + ' / ' + formatTime(audio.duration);
+        }
+    };
+
+    bar.onclick = function(e){
+        e.stopPropagation();
+        if(!audio.duration) return;
+        let rect = this.getBoundingClientRect();
+        let x = e.clientX - rect.left;
+        let per = x / rect.width;
+        audio.currentTime = per * audio.duration;
+    };
+
+    audio.onended = function(){
+        btn.innerText = '▶';
+        playing = false;
+        fill.style.width = '0%';
+    };
+    // 切页面暂停
+    document.addEventListener('visibilitychange',()=>{
+        if(document.hidden){
+            audio.pause();
+            btn.innerText = '▶';
+            playing = false;
+        }
+    })
+});
+</script>
+</body>
+</html>
