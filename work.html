@@ -22,12 +22,10 @@
         @keyframes fadeIn {
             to { opacity: 1; }
         }
-        /* 全局滚动条美化 */
         ::-webkit-scrollbar { width: 8px; height: 8px; }
         ::-webkit-scrollbar-thumb { background: #c8a6e5; border-radius: 10px; }
         ::-webkit-scrollbar-track { background: rgba(255,255,255,0.2); }
 
-        /* 顶部导航栏美化 */
         nav#mainNav {
             width: 100%;
             padding: 28px 0;
@@ -77,7 +75,6 @@
         nav a:hover::after {
             width: 100%;
         }
-        /* 主容器美化 */
         .container {
             width: 92%;
             max-width: 1100px;
@@ -92,7 +89,6 @@
             position: relative;
             overflow: hidden;
         }
-        /* 容器流光效果 */
         .container::before {
             content: "";
             position: absolute;
@@ -118,7 +114,6 @@
             position: relative;
             z-index: 2;
         }
-        /* 专辑布局 */
         .album-wrap {
             display: flex;
             align-items: center;
@@ -132,7 +127,6 @@
             align-items: center;
             gap: 25px;
         }
-        /* 圆形封面 可点击 */
         .circle-cover {
             width: 260px;
             height: 260px;
@@ -141,8 +135,8 @@
             box-shadow: 0 8px 25px rgba(150,110,200,0.3);
             transition: all 0.4s ease;
             border: 8px solid rgba(255,255,255,0.35);
-            cursor: pointer;
-            user-select: none;
+            cursor: pointer !important;
+            pointer-events: auto !important;
         }
         .circle-cover:hover {
             transform: scale(1.05) rotate(8deg);
@@ -174,8 +168,7 @@
             box-shadow: 0 8px 25px rgba(180,100,255,0.35);
             background:linear-gradient(135deg, rgba(230,122,255,0.4), rgba(180,100,255,0.4));
         }
-
-        /* 歌曲弹窗遮罩 */
+        /* 弹窗 */
         .song-mask{
             position: fixed;
             inset:0;
@@ -188,9 +181,8 @@
             padding:20px;
         }
         .song-mask.show{
-            display:flex;
+            display:flex !important;
         }
-        /* 歌曲弹窗盒子 */
         .song-popup{
             width: 700px;
             max-height: 85vh;
@@ -231,7 +223,6 @@
             font-weight: 500;
             letter-spacing: 0.5px;
         }
-        /* 播放器样式 */
         .custom-audio {
             width: 100%;
             background: linear-gradient(135deg, rgba(248,216,240,0.7), rgba(224,200,255,0.7));
@@ -283,9 +274,7 @@
             transform: scale(1.1);
             box-shadow: 0 5px 18px rgba(184,148,232,0.5);
         }
-        .progress-wrap {
-            flex: 1;
-        }
+        .progress-wrap {flex: 1;}
         .progress-bar {
             width: 100%;
             height: 6px;
@@ -327,9 +316,7 @@
             cursor: pointer;
             transition: 0.3s;
         }
-        .speed-select:hover {
-            background:rgba(255,255,255,0.55);
-        }
+        .speed-select:hover {background:rgba(255,255,255,0.55);}
         .down-btn {
             background:linear-gradient(135deg, rgba(198,165,240,0.5), rgba(184,148,232,0.5));
             border:none;
@@ -346,7 +333,6 @@
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(184,148,232,0.35);
         }
-        /* 禁止移动端样式改动 全端统一 */
         @media (max-width:768px){
             nav a {margin:0 22px;font-size:17px;}
             .container {padding:50px 35px;margin:130px auto 80px;}
@@ -368,20 +354,19 @@
         <h1>作品专区</h1>
         <div class="album-wrap">
             <div class="album-left">
-                <img class="circle-cover" src="https://raw.githubusercontent.com/NoxSom/NoxSom.github.io/020d2633aab03f4088c084cabb051793d8f34d7b/%E4%B8%93%E8%BE%911/%E6%97%A0%E6%A0%87%E9%A2%9869.png">
+                <!-- 加id强制绑定点击 -->
+                <img id="openPopupBtn" class="circle-cover" src="https://raw.githubusercontent.com/NoxSom/NoxSom.github.io/020d2633aab03f4088c084cabb051793d8f34d7b/%E4%B8%93%E8%BE%911/%E6%97%A0%E6%A0%87%E9%A2%9869.png">
                 <div class="album-title">Single Album</div>
                 <a href="https://weixin.qq.com/sph/ARNqhihxBO" target="_blank" class="mv-btn">观看MV</a>
             </div>
         </div>
     </div>
 
-    <!-- 歌曲弹窗 -->
     <div class="song-mask" id="songMask">
         <div class="song-popup">
             <div class="close-pop">
                 <button class="close-btn" id="closePop">×</button>
             </div>
-            <!-- 歌曲列表 -->
             <div class="song-item">
                 <div class="song-name">Dream Magnet</div>
                 <div class="custom-audio">
@@ -455,39 +440,49 @@
     </div>
 
 <script>
-// 导航隐藏
+// 导航滚动
 const mainNav = document.getElementById('mainNav');
 let lastScrollY = 0;
 window.addEventListener('scroll', () => {
-    let currentScrollY = window.scrollY;
-    mainNav.classList.toggle('nav-hide', currentScrollY > lastScrollY && currentScrollY > 50);
-    lastScrollY = currentScrollY;
+    let now = window.scrollY;
+    if(now > lastScrollY && now > 50){
+        mainNav.classList.add('nav-hide');
+    }else{
+        mainNav.classList.remove('nav-hide');
+    }
+    lastScrollY = now;
 });
 
-// 弹窗开关 百分百可用
-const cover = document.querySelector('.circle-cover');
-const mask = document.getElementById('songMask');
-const closeBtn = document.getElementById('closePop');
+// 弹窗强制绑定
+var openBtn = document.getElementById("openPopupBtn");
+var maskBox = document.getElementById("songMask");
+var closeBtn = document.getElementById("closePop");
 
-cover.onclick = function(){
-    mask.classList.add('show');
-};
-closeBtn.onclick = function(){
-    mask.classList.remove('show');
-};
-mask.onclick = function(e){
-    if(e.target === this) mask.classList.remove('show');
-};
+// 打开弹窗
+openBtn.addEventListener("click",function(){
+    maskBox.classList.add("show");
+});
+// 关闭按钮
+closeBtn.addEventListener("click",function(){
+    maskBox.classList.remove("show");
+});
+// 点击遮罩关闭
+maskBox.addEventListener("click",function(e){
+    if(e.target === maskBox){
+        maskBox.classList.remove("show");
+    }
+});
 
 // 时间格式化
 function formatTime(s){
     if(isNaN(s)) return "00:00 / 00:00";
-    let m = Math.floor(s/60),sec=Math.floor(s%60);
-    return `${m<10?'0'+m:m}:${sec<10?'0'+sec:sec}`;
+    let m = Math.floor(s/60);
+    let sec = Math.floor(s%60);
+    return (m<10?"0"+m:m)+":"+(sec<10?"0"+sec:sec);
 }
 
-// 播放器逻辑
-document.querySelectorAll('.play-btn').forEach(btn=>{
+// 播放器
+document.querySelectorAll('.play-btn').forEach(function(btn){
     let audio = new Audio();
     let wrap = btn.closest('.custom-audio');
     let bar = wrap.querySelector('.progress-bar');
@@ -496,12 +491,14 @@ document.querySelectorAll('.play-btn').forEach(btn=>{
     let speedSel = wrap.querySelector('.speed-select');
     let playing = false;
 
-    speedSel.onchange = ()=>audio.playbackRate = +speedSel.value;
+    speedSel.onchange = function(){
+        audio.playbackRate = parseFloat(this.value);
+    };
 
     btn.onclick = function(){
         if(!playing){
             audio.src = this.dataset.src;
-            audio.playbackRate = +speedSel.value;
+            audio.playbackRate = parseFloat(speedSel.value);
             audio.play();
             this.innerText = '■';
             playing = true;
@@ -512,25 +509,32 @@ document.querySelectorAll('.play-btn').forEach(btn=>{
         }
     };
 
-    audio.ontimeupdate = ()=>{
+    audio.ontimeupdate = function(){
         if(audio.duration){
-            fill.style.width = (audio.currentTime/audio.duration)*100 + '%';
-            timeTxt.innerText = formatTime(audio.currentTime)+' / '+formatTime(audio.duration);
+            let pct = (audio.currentTime / audio.duration) * 100;
+            fill.style.width = pct + "%";
+            timeTxt.innerText = formatTime(audio.currentTime)+" / "+formatTime(audio.duration);
         }
     };
 
-    bar.onclick = e=>{
-        if(!audio.duration)return;
-        let rect = bar.getBoundingClientRect();
-        let pos = (e.clientX - rect.left)/rect.width;
-        audio.currentTime = pos * audio.duration;
+    bar.onclick = function(e){
+        if(!audio.duration) return;
+        let rect = this.getBoundingClientRect();
+        let rate = (e.clientX - rect.left) / rect.width;
+        audio.currentTime = rate * audio.duration;
     };
 
-    audio.onended = ()=>{
-        btn.innerText='▶';playing=false;fill.style.width='0%';
+    audio.onended = function(){
+        btn.innerText = "▶";
+        playing = false;
+        fill.style.width = "0%";
     };
-    document.addEventListener('visibilitychange',()=>{
-        if(document.hidden){audio.pause();btn.innerText='▶';playing=false;}
+    document.addEventListener("visibilitychange",function(){
+        if(document.hidden){
+            audio.pause();
+            btn.innerText = "▶";
+            playing = false;
+        }
     });
 });
 </script>
