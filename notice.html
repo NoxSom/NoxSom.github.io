@@ -11,15 +11,35 @@
             box-sizing: border-box;
             font-family: "Microsoft Yahei", sans-serif;
         }
+
         body {
+            opacity: 0;
+            animation: fadeIn 1.2s ease forwards;
             background: linear-gradient(135deg, #ffcfe8 0%, #e0c8ff 50%, #f8d8f0 100%);
             min-height: 100vh;
             background-attachment: fixed;
             background-image: 
                 radial-gradient(circle at 10% 20%, rgba(255,255,255,0.3) 0%, transparent 30%),
                 radial-gradient(circle at 90% 80%, rgba(230,210,255,0.4) 0%, transparent 40%),
-                linear-gradient(135deg, #ffcfe8 0%, #e0c8ff 50%, #f8d8f0 100%);
+                radial-gradient(circle at 50% 50%, rgba(245,220,250,0.35) 0%, transparent 50%),
+                linear-gradient(135deg, #ffcfe8 0%, #e0c8ff 100%);
+            overflow-x: hidden;
         }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        #starCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
         nav {
             width: 100%;
             padding: 25px 0;
@@ -27,40 +47,56 @@
             background: rgba(255,255,255,0.25);
             backdrop-filter: blur(8px);
             box-shadow: 0 2px 15px rgba(180,140,220,0.2);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 999;
+            transition: transform 0.4s ease;
         }
+        nav.nav-hide {
+            transform: translateY(-100%);
+        }
+
         nav a {
             color: #7a4b8e;
             text-decoration: none;
             margin: 0 18px;
             font-size: 17px;
             font-weight: 500;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
         }
+
         nav a:hover {
             color: #b878c9;
             text-shadow: 0 0 8px rgba(210,160,240,0.6);
+            letter-spacing: 2px;
         }
+
         .container {
+            position: relative;
+            z-index: 2;
             width: 90%;
             max-width: 900px;
             margin: 80px auto 0;
-            padding: 60px 40px;
+            text-align: center;
+            padding: 80px 40px;
             background: rgba(255,255,255,0.2);
-            backdrop-filter: blur(10px);
-            border-radius: 24px;
+            backdrop-filter: blur(12px);
+            border-radius: 28px;
             border: 1px solid rgba(255,255,255,0.5);
             box-shadow: 
                 0 8px 32px rgba(190,150,230,0.25),
                 inset 0 0 20px rgba(255,255,255,0.3);
         }
+
         h1 {
-            font-size: 48px;
+            font-size: 52px;
             color: #6b3b80;
-            letter-spacing: 6px;
-            text-shadow: 0 2px 10px rgba(180,130,220,0.4);
+            letter-spacing: 8px;
+            text-shadow: 0 2px 12px rgba(180,130,220,0.4);
             margin-bottom: 40px;
-            text-align: center;
         }
+
         /* 公告列表样式 */
         .notice-item {
             background: rgba(255,255,255,0.25);
@@ -70,37 +106,71 @@
             margin-bottom: 20px;
             border: 1px solid rgba(255,255,255,0.4);
             transition: all 0.3s ease;
+            text-align: left;
         }
         .notice-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(180,140,220,0.3);
+            transform: translateY(-6px);
+            box-shadow: 0 8px 20px rgba(180,140,220,0.3);
+            background: rgba(255,255,255,0.35);
         }
         .notice-date {
             font-size: 14px;
             color: #a074b5;
             margin-bottom: 10px;
+            letter-spacing: 1px;
         }
         .notice-title {
             font-size: 22px;
-            color: #6b3b80;
+            color: #7a4b8e;
             margin-bottom: 12px;
             font-weight: 600;
+            letter-spacing: 2px;
         }
         .notice-content {
             font-size: 16px;
             color: #8c5b9e;
-            line-height: 1.8;
+            line-height: 2.2;
         }
+
         .line {
-            width: 80%;
+            width: 60%;
             height: 1px;
-            margin: 30px auto;
-            background: linear-gradient(to right, transparent, #c8a8e0, transparent);
+            margin: 40px auto;
+            background: linear-gradient(to right, transparent, #c9a8e0, transparent);
+        }
+
+        .footer-desc {
+            margin-top: 60px;
+            font-size: 14px;
+            color: #a880b9;
+            letter-spacing: 1px;
+        }
+
+        @media (max-width: 768px) {
+            nav a {
+                margin: 0 10px;
+                font-size: 15px;
+            }
+            h1 {
+                font-size: 38px;
+                letter-spacing: 4px;
+            }
+            .container {
+                padding: 50px 20px;
+            }
+            .notice-title {
+                font-size: 20px;
+            }
+            .notice-content {
+                font-size: 15px;
+            }
         }
     </style>
 </head>
 <body>
-    <nav>
+    <canvas id="starCanvas"></canvas>
+
+    <nav id="mainNav">
         <a href="index.html">首页</a>
         <a href="notice.html">公告</a>
         <a href="member.html">艺人动态</a>
@@ -145,6 +215,82 @@
             </div>
         </div>
 
+        <div class="footer-desc">
+            Official Fan Site · NoxSom © Dream Loop
+        </div>
     </div>
+
+<script>
+// 禁用右键和选中
+document.oncontextmenu = function(){return false;}
+document.onselectstart = function(){return false;}
+
+// 导航栏滚动隐藏
+const mainNav = document.getElementById('mainNav');
+let lastScrollY = 0;
+window.addEventListener('scroll', () => {
+    let currentScrollY = window.scrollY;
+    if (currentScrollY > lastScrollY && currentScrollY > 50) {
+        mainNav.classList.add('nav-hide');
+    } else {
+        mainNav.classList.remove('nav-hide');
+    }
+    lastScrollY = currentScrollY;
+});
+
+// 星空画布效果
+const canvas = document.getElementById('starCanvas');
+const ctx = canvas.getContext('2d');
+let stars = [];
+
+function resizeCanvas(){
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener('resize',resizeCanvas);
+
+class Star{
+    constructor(){
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.radius = Math.random() * 2 + 0.5;
+        this.speedX = Math.random() * 0.5 - 0.25;
+        this.speedY = Math.random() * 0.5 - 0.25;
+        this.alpha = Math.random() * 0.8 + 0.2;
+    }
+    draw(){
+        ctx.beginPath();
+        ctx.arc(this.x,this.y,this.radius,0,Math.PI*2);
+        ctx.fillStyle = `rgba(255,255,255,${this.alpha})`;
+        ctx.fill();
+    }
+    update(){
+        this.x += this.speedX;
+        this.y += this.speedY;
+        if(this.x < 0) this.x = canvas.width;
+        if(this.x > canvas.width) this.x = 0;
+        if(this.y < 0) this.y = canvas.height;
+        if(this.y > canvas.height) this.y = 0;
+        this.draw();
+    }
+}
+
+function createStars(){
+    stars = [];
+    for(let i=0; i<200; i++){
+        stars.push(new Star());
+    }
+}
+
+function animateStars(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    stars.forEach(star => star.update());
+    requestAnimationFrame(animateStars);
+}
+
+createStars();
+animateStars();
+</script>
 </body>
 </html>
